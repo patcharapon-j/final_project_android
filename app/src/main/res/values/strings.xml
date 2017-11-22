@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">SteamStalker</string>
+    <string name="title_activity_welcome">WelcomeActivity</string>
+    <string name="welcome_button_text">Get Started</string>
+    <string name="steamstalker_tagline">All About Your Games at Your Fingertips</string>
+
+    <string name="facebook_app_id">438814086520367</string>
+    <string name="fb_login_protocol_scheme">fb438814086520367</string>
 </resources>
