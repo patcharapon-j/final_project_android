@@ -1,17 +1,26 @@
 package com.a58070096.patcharaponjoksamut.steamstalker.Activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 
 import com.a58070096.patcharaponjoksamut.steamstalker.R;
 import com.a58070096.patcharaponjoksamut.steamstalker.ViewModel.AuthenticationViewModel;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.muddzdev.styleabletoastlibrary.StyleableToast;
 
 public class WelcomeActivity extends AppCompatActivity implements AuthenticationViewModel.AuthenticationCallbacksListener {
 
     AuthenticationViewModel authenticationViewModel;
+    LoginButton loginButton;
+    CallbackManager mCallbackManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +28,51 @@ public class WelcomeActivity extends AppCompatActivity implements Authentication
         setContentView(R.layout.activity_welcome);
 
         initializeVariables();
+        initializeFacebookButton();
+    }
+
+    private void showLoginFailToast() {
+        StyleableToast toast = new StyleableToast
+                .Builder(this)
+                .text("Login Failed! Please try again")
+                .textColor(Color.WHITE)
+                .backgroundColor(getResources().getColor(R.color.colorDarkRed))
+                .build();
+
+        toast.show();
+    }
+
+    private void initializeFacebookButton() {
+        // Initialize Facebook Login button
+        this.mCallbackManager = CallbackManager.Factory.create();
+        loginButton = findViewById(R.id.login_button);
+        loginButton.setReadPermissions("email", "public_profile");
+        loginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                Log.i("Debug", loginResult.toString());
+                authenticationViewModel.authenticate(loginResult.getAccessToken());
+            }
+
+            @Override
+            public void onCancel() {
+                Log.i("Debug", "Cancel");
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                Log.d("Debug", error.toString());
+                showLoginFailToast();
+
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        this.mCallbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
     private void initializeVariables() {
@@ -27,7 +81,7 @@ public class WelcomeActivity extends AppCompatActivity implements Authentication
     }
 
     public void onGetStartedButtonPressed(View view) {
-        authenticationViewModel.authenticate();
+        loginButton.performClick();
     }
 
     @Override
@@ -37,13 +91,6 @@ public class WelcomeActivity extends AppCompatActivity implements Authentication
 
     @Override
     public void onAuthenticationFailure() {
-        StyleableToast toast = new StyleableToast
-                .Builder(this)
-                .text("Login Failed! Please try again")
-                .textColor(Color.WHITE)
-                .backgroundColor(getResources().getColor(R.color.colorDarkRed))
-                .build();
-
-        toast.show();
+        showLoginFailToast();
     }
 }

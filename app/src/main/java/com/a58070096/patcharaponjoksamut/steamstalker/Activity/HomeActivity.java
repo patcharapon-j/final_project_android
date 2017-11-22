@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.a58070096.patcharaponjoksamut.steamstalker.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -15,11 +17,18 @@ public class HomeActivity extends AppCompatActivity {
 
         getSupportActionBar().hide();
 
-        showWelcomeActivity();
+        this.checkForLogin();
     }
 
     private void showWelcomeActivity() {
         Intent intent = new Intent(this, WelcomeActivity.class);
         this.startActivity(intent);
+    }
+
+    private void checkForLogin() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user == null) {
+            this.showWelcomeActivity();
+        }
     }
 }
