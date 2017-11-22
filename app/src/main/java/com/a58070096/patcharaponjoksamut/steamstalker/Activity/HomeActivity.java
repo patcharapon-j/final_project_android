@@ -9,6 +9,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.a58070096.patcharaponjoksamut.steamstalker.Fragment.GameFragment;
 import com.a58070096.patcharaponjoksamut.steamstalker.Fragment.NewsFragment;
@@ -22,7 +23,7 @@ import com.google.firebase.auth.FirebaseUser;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements ProfileFragment.ProfileFragmentListener {
 
     @BindView(R.id.bottom_navigation)
     AHBottomNavigation bottomNavigationView;
@@ -81,20 +82,20 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public boolean onTabSelected(int position, boolean wasSelected) {
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                Fragment newFragment;
 
                 switch (position) {
                     case 0:
-                        newFragment = new NewsFragment();
-                        ft.replace(R.id.fragment_container, newFragment);
+                        NewsFragment newsFragment = new NewsFragment();
+                        ft.replace(R.id.fragment_container, newsFragment);
                         break;
                     case 1:
-                        newFragment = new GameFragment();
-                        ft.replace(R.id.fragment_container, newFragment);
+                        GameFragment gameFragment = new GameFragment();
+                        ft.replace(R.id.fragment_container, gameFragment);
                         break;
                     case 2:
-                        newFragment = new ProfileFragment();
-                        ft.replace(R.id.fragment_container, newFragment);
+                        ProfileFragment profileFragment = new ProfileFragment();
+                        profileFragment.setListener(HomeActivity.this);
+                        ft.replace(R.id.fragment_container, profileFragment);
                         break;
                 }
 
@@ -103,5 +104,11 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+
+    @Override
+    public void onLogout() {
+        this.checkForLogin();
     }
 }
