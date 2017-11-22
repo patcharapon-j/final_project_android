@@ -7,20 +7,29 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.a58070096.patcharaponjoksamut.steamstalker.R;
 import com.a58070096.patcharaponjoksamut.steamstalker.ViewModel.ProfileViewModel;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 
-/**
- * A simple {@link Fragment} subclass.
- */
+
 public class ProfileFragment extends Fragment {
+
+    @BindView(R.id.profile_image)
+    CircleImageView imageView;
+    @BindView(R.id.display_name_text)
+    TextView displayNameTextView;
+    @BindView(R.id.email_text)
+    TextView emailTextView;
 
     public interface ProfileFragmentListener {
         void onLogout();
@@ -41,6 +50,8 @@ public class ProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
         ButterKnife.bind(this, view);
+
+        displayUserInfo();
 
         return view;
     }
@@ -68,5 +79,11 @@ public class ProfileFragment extends Fragment {
                 })
                 .negativeText("Cancel")
                 .show();
+    }
+
+    private void displayUserInfo() {
+        displayNameTextView.setText(profileViewModel.getDisplayName());
+        emailTextView.setText(profileViewModel.getEmail());
+        Glide.with(this).load(profileViewModel.getProfileImage()).into(imageView);
     }
 }
