@@ -6,13 +6,18 @@ package com.a58070096.patcharaponjoksamut.steamstalker.ViewModel;
 
 public class AuthenticationViewModel {
 
-    public interface AuthenticationCallbacks {
+    public interface AuthenticationCallbacksListener {
         void onAuthenticationSuccessful();
         void onAuthenticationFailure();
     }
 
-    public void authenticate() {
+    AuthenticationCallbacksListener listener;
 
+    public void authenticate() {
+        this.listener.onAuthenticationFailure();
     }
 
+    public void setListener(AuthenticationCallbacksListener listener) {
+        this.listener = listener;
+    }
 }
