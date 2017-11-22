@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 
 import com.a58070096.patcharaponjoksamut.steamstalker.R;
@@ -15,17 +16,28 @@ import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.muddzdev.styleabletoastlibrary.StyleableToast;
+import com.wang.avi.AVLoadingIndicatorView;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class WelcomeActivity extends AppCompatActivity implements AuthenticationViewModel.AuthenticationCallbacksListener {
 
     AuthenticationViewModel authenticationViewModel;
     LoginButton loginButton;
     CallbackManager mCallbackManager;
+    Boolean isTouchEnabled = true;
+
+    @BindView(R.id.activity_indicator_container) View activityIndicatorView;
+    @BindView(R.id.activity_indicator)
+    AVLoadingIndicatorView activityIndicator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+
+        ButterKnife.bind(this);
 
         initializeVariables();
         initializeFacebookButton();
@@ -42,6 +54,18 @@ public class WelcomeActivity extends AppCompatActivity implements Authentication
         toast.show();
     }
 
+    private void showActivityIndicator() {
+        this.activityIndicatorView.setVisibility(View.VISIBLE);
+        this.activityIndicator.smoothToShow();
+        isTouchEnabled = false;
+    }
+
+    private void hideActivityIndicator() {
+        this.activityIndicatorView.setVisibility(View.INVISIBLE);
+        this.activityIndicator.smoothToHide();
+        isTouchEnabled = true;
+    }
+
     private void initializeFacebookButton() {
         // Initialize Facebook Login button
         this.mCallbackManager = CallbackManager.Factory.create();
@@ -52,6 +76,7 @@ public class WelcomeActivity extends AppCompatActivity implements Authentication
             public void onSuccess(LoginResult loginResult) {
                 Log.i("Debug", loginResult.toString());
                 authenticationViewModel.authenticate(loginResult.getAccessToken());
+                showActivityIndicator();
             }
 
             @Override
@@ -86,11 +111,22 @@ public class WelcomeActivity extends AppCompatActivity implements Authentication
 
     @Override
     public void onAuthenticationSuccessful() {
+        hideActivityIndicator();
         this.finish();
     }
 
     @Override
     public void onAuthenticationFailure() {
+        hideActivityIndicator();
         showLoginFailToast();
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if(isTouchEnabled) {
+            return super.onTouchEvent(event);
+        } else {
+            return true;
+        }
     }
 }
