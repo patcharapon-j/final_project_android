@@ -1,5 +1,7 @@
 package com.a58070096.patcharaponjoksamut.steamstalker.Activity;
 
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
@@ -8,6 +10,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.a58070096.patcharaponjoksamut.steamstalker.Fragment.GameFragment;
+import com.a58070096.patcharaponjoksamut.steamstalker.Fragment.NewsFragment;
+import com.a58070096.patcharaponjoksamut.steamstalker.Fragment.ProfileFragment;
 import com.a58070096.patcharaponjoksamut.steamstalker.R;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
@@ -65,10 +70,35 @@ public class HomeActivity extends AppCompatActivity {
 
         bottomNavigationView.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);
 
+        bottomNavigationView.setCurrentItem(0);
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        Fragment newFragment;
+        newFragment = new NewsFragment();
+        ft.replace(R.id.fragment_container, newFragment);
+        ft.commit();
+
         bottomNavigationView.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
             @Override
             public boolean onTabSelected(int position, boolean wasSelected) {
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                Fragment newFragment;
 
+                switch (position) {
+                    case 0:
+                        newFragment = new NewsFragment();
+                        ft.replace(R.id.fragment_container, newFragment);
+                        break;
+                    case 1:
+                        newFragment = new GameFragment();
+                        ft.replace(R.id.fragment_container, newFragment);
+                        break;
+                    case 2:
+                        newFragment = new ProfileFragment();
+                        ft.replace(R.id.fragment_container, newFragment);
+                        break;
+                }
+
+                ft.commit();
                 return true;
             }
         });
