@@ -2,6 +2,7 @@ package com.a58070096.patcharaponjoksamut.steamstalker.Fragment;
 
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.view.ViewGroup;
 
 import com.a58070096.patcharaponjoksamut.steamstalker.R;
 import com.a58070096.patcharaponjoksamut.steamstalker.ViewModel.ProfileViewModel;
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.firebase.auth.FirebaseAuth;
 
 import butterknife.ButterKnife;
@@ -44,12 +47,26 @@ public class ProfileFragment extends Fragment {
 
     @OnClick(R.id.logout_button)
     public void btnPressed() {
-        profileViewModel.signOut();
-        listener.onLogout();
-
+        showLogoutConfirmDialog();
     }
 
     public void setListener(ProfileFragmentListener listener) {
         this.listener = listener;
+    }
+
+    private void showLogoutConfirmDialog() {
+        new MaterialDialog.Builder(getContext())
+                .title("Logout")
+                .content("Are you sure you want to Logout?")
+                .positiveText("Logout")
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        profileViewModel.signOut();
+                        listener.onLogout();
+                    }
+                })
+                .negativeText("Cancel")
+                .show();
     }
 }

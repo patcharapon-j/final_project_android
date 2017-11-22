@@ -37,6 +37,7 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
     compile 'com.aurelhubert:ahbottomnavigation:2.1.0'
+    compile 'com.afollestad.material-dialogs:core:0.9.5.0'
 }
 
 
