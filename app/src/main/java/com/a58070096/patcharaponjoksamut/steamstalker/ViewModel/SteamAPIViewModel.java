@@ -15,6 +15,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 
 /**
@@ -65,6 +67,12 @@ public class SteamAPIViewModel {
                                                 allGame.add(game);
 
                                                 if(finalCount >= 100) {
+                                                    Collections.sort(allGame, new Comparator<GameTileModel>() {
+                                                        @Override
+                                                        public int compare(GameTileModel gameTileModel, GameTileModel t1) {
+                                                            return gameTileModel.getRank() - t1.getRank();
+                                                        }
+                                                    });
                                                     listener.getTop100GameResponse(allGame);
                                                 }
 

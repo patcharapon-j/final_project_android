@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import com.a58070096.patcharaponjoksamut.steamstalker.Adapter.GameTileAdapter;
 import com.a58070096.patcharaponjoksamut.steamstalker.Model.GameTileModel;
@@ -22,6 +23,8 @@ import com.a58070096.patcharaponjoksamut.steamstalker.ViewModel.SteamAPIViewMode
 import com.androidnetworking.AndroidNetworking;
 import com.jacksonandroidnetworking.JacksonParserFactory;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -41,6 +44,9 @@ public class GameFragment extends Fragment implements SteamAPIViewModel.SteaAPIV
 
     @BindView(R.id.ultimate_recycler_view)
     UltimateRecyclerView recyclerView;
+
+    @BindView(R.id.game_bar_text)
+    TextView gameBarTextView;
 
     private List<GameTileModel> allGameTileModel;
     private SteamAPIViewModel steamViewModel = new SteamAPIViewModel();
@@ -68,7 +74,7 @@ public class GameFragment extends Fragment implements SteamAPIViewModel.SteaAPIV
     }
 
     private void setupSearchView() {
-
+        gameBarTextView.setText(R.string.default_game_bar_text);
     }
 
     private void initializeViewModel() {
@@ -102,16 +108,11 @@ public class GameFragment extends Fragment implements SteamAPIViewModel.SteaAPIV
 
     @Override
     public void getTop100GameResponse(ArrayList<GameTileModel> allGame) {
-        Collections.sort(allGame, new Comparator<GameTileModel>() {
-            @Override
-            public int compare(GameTileModel gameTileModel, GameTileModel t1) {
-                return gameTileModel.getRank() - t1.getRank();
-            }
-        });
         adapter.setGameList(allGame);
         adapter.notifyDataSetChanged();
         recyclerView.setRefreshing(false);
         recyclerView.hideEmptyView();
+        gameBarTextView.setText(R.string.default_game_bar_text);
 
     }
 }
