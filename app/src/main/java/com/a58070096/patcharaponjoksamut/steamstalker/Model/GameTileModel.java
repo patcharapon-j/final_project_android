@@ -11,6 +11,11 @@ public class GameTileModel {
     private String name;
     private Uri imgUrl;
 
+    public GameTileModel(String name, Uri imgUrl) {
+        this.name = name;
+        this.imgUrl = imgUrl;
+    }
+
     public String getName() {
         return name;
     }
