@@ -20,8 +20,10 @@ import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.a58070096.patcharaponjoksamut.steamstalker.Adapter.GameTileAdapter;
+import com.a58070096.patcharaponjoksamut.steamstalker.Model.GameCacheModel;
 import com.a58070096.patcharaponjoksamut.steamstalker.Model.GameTileModel;
 import com.a58070096.patcharaponjoksamut.steamstalker.R;
+import com.a58070096.patcharaponjoksamut.steamstalker.Singleton.AllGameDataCache;
 import com.a58070096.patcharaponjoksamut.steamstalker.ViewModel.SteamAPIViewModel;
 import com.androidnetworking.AndroidNetworking;
 import com.jacksonandroidnetworking.JacksonParserFactory;
@@ -42,7 +44,7 @@ import butterknife.ButterKnife;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class GameFragment extends Fragment implements SteamAPIViewModel.SteaAPIVIewModelListener {
+public class GameFragment extends Fragment implements SteamAPIViewModel.SteaAPIVIewModelListener, AllGameDataCache.SearchForGameResult {
 
     @BindView(R.id.searchView)
     SearchView searchView;
@@ -81,7 +83,24 @@ public class GameFragment extends Fragment implements SteamAPIViewModel.SteaAPIV
     }
 
     private void setupSearchView() {
+        AllGameDataCache.getInstance().setListener(this);
         gameBarTextView.setText(R.string.default_game_bar_text);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                if(s.isEmpty() || s.equals("")) {
+                    steamViewModel.getTop100Game();
+                } else {
+                    AllGameDataCache.getInstance().searchForGame(s);
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
     }
 
     private void initializeViewModel() {
@@ -125,5 +144,24 @@ public class GameFragment extends Fragment implements SteamAPIViewModel.SteaAPIV
 
     }
 
+    @Override
+    public void searchGameResponse(ArrayList<GameTileModel> allGame) {
+        adapter.setGameList(allGame);
+        adapter.notifyDataSetChanged();
+        recyclerView.setRefreshing(false);
+        gameBarTextView.setText(searchView.getQuery());
+        activityIndicatiorContainer.setVisibility(View.INVISIBLE);
+    }
 
+
+    @Override
+    public void onFoundGame(ArrayList<String> result) {
+        Log.v("Debug", result.toString());
+        steamViewModel.getTileForGame(result);
+    }
+
+    @Override
+    public void onNotFound() {
+        Log.v("Debug", "Not Found");
+    }
 }
