@@ -3,7 +3,9 @@ package com.a58070096.patcharaponjoksamut.steamstalker.Fragment;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -56,13 +58,22 @@ public class GameFragment extends Fragment implements SteamAPIViewModel.SteaAPIV
         View view = inflater.inflate(R.layout.fragment_game, container, false);
         ButterKnife.bind(this, view);
 
-        steamViewModel.setListener(this);
-        steamViewModel.getTop100Game();
+        initializeViewModel();
+        setupSearchView();
 
         loadGameTileData();
         setupRecyclerView(view);
 
         return view;
+    }
+
+    private void setupSearchView() {
+
+    }
+
+    private void initializeViewModel() {
+        steamViewModel.setListener(this);
+        steamViewModel.getTop100Game();
     }
 
     private void loadGameTileData() {
@@ -72,11 +83,21 @@ public class GameFragment extends Fragment implements SteamAPIViewModel.SteaAPIV
     private void setupRecyclerView(View view) {
         adapter = new GameTileAdapter(allGameTileModel);
         adapter.setActivity(getActivity());
-        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(), 2);
+        final RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(), 2);
 
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
+
+        recyclerView.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                adapter.setGameList(new ArrayList<GameTileModel>());
+                adapter.notifyDataSetChanged();
+                steamViewModel.getTop100Game();
+                recyclerView.showEmptyView();
+            }
+        });
     }
 
     @Override
@@ -89,6 +110,8 @@ public class GameFragment extends Fragment implements SteamAPIViewModel.SteaAPIV
         });
         adapter.setGameList(allGame);
         adapter.notifyDataSetChanged();
+        recyclerView.setRefreshing(false);
+        recyclerView.hideEmptyView();
 
     }
 }
