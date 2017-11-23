@@ -45,6 +45,8 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.3.1'
 
     compile 'com.marshalchen.ultimaterecyclerview:library:0.7.0'
+
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
 }
 
 
