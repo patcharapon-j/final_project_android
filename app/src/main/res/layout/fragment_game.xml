@@ -15,6 +15,7 @@
         android:clipToPadding="false"
         android:paddingLeft="4dp"
         android:paddingRight="4dp"
+        app:recyclerviewEmptyView="@layout/empty_view"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

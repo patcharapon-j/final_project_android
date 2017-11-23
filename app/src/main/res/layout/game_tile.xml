@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="250dp">
+    android:layout_height="90dp">
 
     <ImageView
         android:id="@+id/game_tile_image"
@@ -30,7 +30,7 @@
         android:layout_marginStart="4dp"
         android:background="#99000000"
         android:elevation="2dp"
-        android:padding="5dp"
+        android:padding="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -43,6 +43,7 @@
             android:text="Half Life: Episode 3"
             android:textAlignment="center"
             android:textColor="#FFFFFF"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"

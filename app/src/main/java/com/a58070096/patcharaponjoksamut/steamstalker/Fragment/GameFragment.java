@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +16,14 @@ import android.widget.SearchView;
 import com.a58070096.patcharaponjoksamut.steamstalker.Adapter.GameTileAdapter;
 import com.a58070096.patcharaponjoksamut.steamstalker.Model.GameTileModel;
 import com.a58070096.patcharaponjoksamut.steamstalker.R;
+import com.a58070096.patcharaponjoksamut.steamstalker.ViewModel.SteamAPIViewModel;
+import com.androidnetworking.AndroidNetworking;
+import com.jacksonandroidnetworking.JacksonParserFactory;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import butterknife.BindView;
@@ -26,7 +32,7 @@ import butterknife.ButterKnife;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class GameFragment extends Fragment {
+public class GameFragment extends Fragment implements SteamAPIViewModel.SteaAPIVIewModelListener {
 
     @BindView(R.id.searchView)
     SearchView searchView;
@@ -35,7 +41,8 @@ public class GameFragment extends Fragment {
     UltimateRecyclerView recyclerView;
 
     private List<GameTileModel> allGameTileModel;
-
+    private SteamAPIViewModel steamViewModel = new SteamAPIViewModel();
+    private GameTileAdapter adapter;
 
     public GameFragment() {
         // Required empty public constructor
@@ -49,6 +56,9 @@ public class GameFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_game, container, false);
         ButterKnife.bind(this, view);
 
+        steamViewModel.setListener(this);
+        steamViewModel.getTop100Game();
+
         loadGameTileData();
         setupRecyclerView(view);
 
@@ -57,18 +67,10 @@ public class GameFragment extends Fragment {
 
     private void loadGameTileData() {
         allGameTileModel = new ArrayList<>();
-        allGameTileModel.add(new GameTileModel("We Slay Monsters", Uri.parse("http://cdn.akamai.steamstatic.com/steam/apps/332540/ss_2b346066ec4e674c51f952ac443d4472813fd8e5.600x338.jpg?t=1498799828")));
-        allGameTileModel.add(new GameTileModel("We Slay Monsters", Uri.parse("http://cdn.akamai.steamstatic.com/steam/apps/332540/ss_2b346066ec4e674c51f952ac443d4472813fd8e5.600x338.jpg?t=1498799828")));
-        allGameTileModel.add(new GameTileModel("We Slay Monsters", Uri.parse("http://cdn.akamai.steamstatic.com/steam/apps/332540/ss_2b346066ec4e674c51f952ac443d4472813fd8e5.600x338.jpg?t=1498799828")));
-        allGameTileModel.add(new GameTileModel("We Slay Monsters", Uri.parse("http://cdn.edgecast.steamstatic.com/steam/apps/243780/header.jpg?t=1484564592")));
-        allGameTileModel.add(new GameTileModel("We Slay Monsters", Uri.parse("http://cdn.akamai.steamstatic.com/steam/apps/332540/ss_2b346066ec4e674c51f952ac443d4472813fd8e5.600x338.jpg?t=1498799828")));
-        allGameTileModel.add(new GameTileModel("We Slay Monsters", Uri.parse("http://cdn.akamai.steamstatic.com/steam/apps/332540/ss_2b346066ec4e674c51f952ac443d4472813fd8e5.600x338.jpg?t=1498799828")));
-        allGameTileModel.add(new GameTileModel("We Slay Monsters", Uri.parse("http://cdn.akamai.steamstatic.com/steam/apps/332540/ss_2b346066ec4e674c51f952ac443d4472813fd8e5.600x338.jpg?t=1498799828")));
-
     }
 
     private void setupRecyclerView(View view) {
-        GameTileAdapter adapter = new GameTileAdapter(allGameTileModel);
+        adapter = new GameTileAdapter(allGameTileModel);
         adapter.setActivity(getActivity());
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(), 2);
 
@@ -77,4 +79,16 @@ public class GameFragment extends Fragment {
         recyclerView.setAdapter(adapter);
     }
 
+    @Override
+    public void getTop100GameResponse(ArrayList<GameTileModel> allGame) {
+        Collections.sort(allGame, new Comparator<GameTileModel>() {
+            @Override
+            public int compare(GameTileModel gameTileModel, GameTileModel t1) {
+                return gameTileModel.getRank() - t1.getRank();
+            }
+        });
+        adapter.setGameList(allGame);
+        adapter.notifyDataSetChanged();
+
+    }
 }

@@ -91,4 +91,8 @@ public class GameTileAdapter extends UltimateViewAdapter<GameTileAdapter.MyViewH
     public void setActivity(Activity activity) {
         this.activity = activity;
     }
+
+    public void setGameList(List<GameTileModel> gameList) {
+        this.gameList = gameList;
+    }
 }

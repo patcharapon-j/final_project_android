@@ -15,10 +15,12 @@ import com.a58070096.patcharaponjoksamut.steamstalker.Fragment.GameFragment;
 import com.a58070096.patcharaponjoksamut.steamstalker.Fragment.NewsFragment;
 import com.a58070096.patcharaponjoksamut.steamstalker.Fragment.ProfileFragment;
 import com.a58070096.patcharaponjoksamut.steamstalker.R;
+import com.androidnetworking.AndroidNetworking;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.jacksonandroidnetworking.JacksonParserFactory;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,6 +34,9 @@ public class HomeActivity extends AppCompatActivity implements ProfileFragment.P
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        AndroidNetworking.initialize(getApplicationContext());
+        AndroidNetworking.setParserFactory(new JacksonParserFactory());
 
         ButterKnife.bind(this);
 
