@@ -6,13 +6,24 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 
 import com.a58070096.patcharaponjoksamut.steamstalker.R;
+import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class GameFragment extends Fragment {
+
+    @BindView(R.id.searchView)
+    SearchView searchView;
+
+    @BindView(R.id.ultimate_recycler_view)
+    UltimateRecyclerView recyclerView;
 
 
     public GameFragment() {
@@ -24,7 +35,9 @@ public class GameFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_game, container, false);
+        View view = inflater.inflate(R.layout.fragment_game, container, false);
+        ButterKnife.bind(view);
+        return view;
     }
 
 }

@@ -132,10 +132,12 @@
     <orderEntry type="library" name="com.github.bumptech.glide:disklrucache:4.3.1@jar" level="project" />
     <orderEntry type="library" name="com.google.android.gms:play-services-basement-license-11.6.0" level="project" />
     <orderEntry type="library" name="com.android.support:support-compat-27.0.0" level="project" />
+    <orderEntry type="library" name="jp.wasabeef:recyclerview-animators-2.2.3" level="project" />
     <orderEntry type="library" name="com.android.support:support-vector-drawable-27.0.0" level="project" />
     <orderEntry type="library" name="com.android.support.constraint:constraint-layout-solver:1.0.2@jar" level="project" />
     <orderEntry type="library" name="com.android.support.constraint:constraint-layout-1.0.2" level="project" />
     <orderEntry type="library" name="me.zhanghai.android.materialprogressbar:library-1.4.2" level="project" />
+    <orderEntry type="library" name="com.android.support:support-v13-24.1.1" level="project" />
     <orderEntry type="library" name="com.google.firebase:firebase-iid-11.6.0" level="project" />
     <orderEntry type="library" scope="TEST" name="com.android.support.test:runner-1.0.1" level="project" />
     <orderEntry type="library" scope="TEST" name="com.google.code.findbugs:jsr305:2.0.1@jar" level="project" />
@@ -152,6 +154,8 @@
     <orderEntry type="library" name="com.google.firebase:firebase-common-license-11.6.0" level="project" />
     <orderEntry type="library" name="com.google.zxing:core:3.3.0@jar" level="project" />
     <orderEntry type="library" scope="TEST" name="net.sf.kxml:kxml2:2.3.0@jar" level="project" />
+    <orderEntry type="library" name="com.marshalchen.ultimaterecyclerview:library-0.7.0" level="project" />
+    <orderEntry type="library" name="in.srain.cube:ultra-ptr-1.0.11" level="project" />
     <orderEntry type="library" name="com.google.firebase:firebase-auth-11.6.0" level="project" />
     <orderEntry type="library" name="com.android.support:transition-26.1.0" level="project" />
     <orderEntry type="library" name="com.google.android.gms:play-services-base-11.6.0" level="project" />
