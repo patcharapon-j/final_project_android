@@ -5,12 +5,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MotionEventCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
@@ -22,6 +24,8 @@ import com.a58070096.patcharaponjoksamut.steamstalker.R;
 import com.a58070096.patcharaponjoksamut.steamstalker.ViewModel.SteamAPIViewModel;
 import com.androidnetworking.AndroidNetworking;
 import com.jacksonandroidnetworking.JacksonParserFactory;
+import com.marshalchen.ultimaterecyclerview.ObservableScrollState;
+import com.marshalchen.ultimaterecyclerview.ObservableScrollViewCallbacks;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 
 import org.w3c.dom.Text;
@@ -104,6 +108,7 @@ public class GameFragment extends Fragment implements SteamAPIViewModel.SteaAPIV
                 recyclerView.showEmptyView();
             }
         });
+
     }
 
     @Override
@@ -115,4 +120,6 @@ public class GameFragment extends Fragment implements SteamAPIViewModel.SteaAPIV
         gameBarTextView.setText(R.string.default_game_bar_text);
 
     }
+
+
 }

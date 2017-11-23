@@ -30,6 +30,11 @@ public class HomeActivity extends AppCompatActivity implements ProfileFragment.P
     @BindView(R.id.bottom_navigation)
     AHBottomNavigation bottomNavigationView;
 
+    @BindView(R.id.game_container) View gameContainer;
+    @BindView(R.id.profile_container) View profileContainer;
+    @BindView(R.id.news_container) View newsContainer;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,12 +81,7 @@ public class HomeActivity extends AppCompatActivity implements ProfileFragment.P
 
         bottomNavigationView.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);
 
-        bottomNavigationView.setCurrentItem(0);
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        Fragment newFragment;
-        newFragment = new NewsFragment();
-        ft.replace(R.id.fragment_container, newFragment);
-        ft.commit();
+        bottomNavigationView.setCurrentItem(1);
 
         bottomNavigationView.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
             @Override
@@ -90,17 +90,19 @@ public class HomeActivity extends AppCompatActivity implements ProfileFragment.P
 
                 switch (position) {
                     case 0:
-                        NewsFragment newsFragment = new NewsFragment();
-                        ft.replace(R.id.fragment_container, newsFragment);
+                        newsContainer.setVisibility(View.VISIBLE);
+                        gameContainer.setVisibility(View.INVISIBLE);
+                        profileContainer.setVisibility(View.INVISIBLE);
                         break;
                     case 1:
-                        GameFragment gameFragment = new GameFragment();
-                        ft.replace(R.id.fragment_container, gameFragment);
+                        newsContainer.setVisibility(View.INVISIBLE);
+                        gameContainer.setVisibility(View.VISIBLE);
+                        profileContainer.setVisibility(View.INVISIBLE);
                         break;
                     case 2:
-                        ProfileFragment profileFragment = new ProfileFragment();
-                        profileFragment.setListener(HomeActivity.this);
-                        ft.replace(R.id.fragment_container, profileFragment);
+                        newsContainer.setVisibility(View.INVISIBLE);
+                        gameContainer.setVisibility(View.INVISIBLE);
+                        profileContainer.setVisibility(View.VISIBLE);
                         break;
                 }
 
