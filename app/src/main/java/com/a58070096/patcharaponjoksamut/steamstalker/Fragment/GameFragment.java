@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.widget.SearchView;
 import android.widget.TextView;
 
@@ -52,6 +53,8 @@ public class GameFragment extends Fragment implements SteamAPIViewModel.SteaAPIV
     @BindView(R.id.game_bar_text)
     TextView gameBarTextView;
 
+    @BindView(R.id.activity_indicator_container) View activityIndicatiorContainer;
+
     private List<GameTileModel> allGameTileModel;
     private SteamAPIViewModel steamViewModel = new SteamAPIViewModel();
     private GameTileAdapter adapter;
@@ -83,6 +86,7 @@ public class GameFragment extends Fragment implements SteamAPIViewModel.SteaAPIV
 
     private void initializeViewModel() {
         steamViewModel.setListener(this);
+        activityIndicatiorContainer.setVisibility(View.VISIBLE);
         steamViewModel.getTop100Game();
     }
 
@@ -102,10 +106,10 @@ public class GameFragment extends Fragment implements SteamAPIViewModel.SteaAPIV
         recyclerView.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                activityIndicatiorContainer.setVisibility(View.VISIBLE);
                 adapter.setGameList(new ArrayList<GameTileModel>());
                 adapter.notifyDataSetChanged();
                 steamViewModel.getTop100Game();
-                recyclerView.showEmptyView();
             }
         });
 
@@ -116,8 +120,8 @@ public class GameFragment extends Fragment implements SteamAPIViewModel.SteaAPIV
         adapter.setGameList(allGame);
         adapter.notifyDataSetChanged();
         recyclerView.setRefreshing(false);
-        recyclerView.hideEmptyView();
         gameBarTextView.setText(R.string.default_game_bar_text);
+        activityIndicatiorContainer.setVisibility(View.INVISIBLE);
 
     }
 

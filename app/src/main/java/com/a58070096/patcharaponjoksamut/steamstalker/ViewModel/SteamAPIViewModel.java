@@ -84,6 +84,7 @@ public class SteamAPIViewModel {
                                         @Override
                                         public void onError(ANError anError) {
                                             Log.d("Debug", anError.toString());
+                                            listener.getTop100GameResponse(new ArrayList<GameTileModel>());
                                         }
                                     });
                             count += 1;
@@ -93,6 +94,7 @@ public class SteamAPIViewModel {
                     @Override
                     public void onError(ANError anError) {
                         Log.d("Debug", anError.toString());
+                        listener.getTop100GameResponse(new ArrayList<GameTileModel>());
                     }
                 });
 
