@@ -3,6 +3,6 @@
 
 \.idea/
 
-\.gradle
+.gradle
 
 build/android-profile/
