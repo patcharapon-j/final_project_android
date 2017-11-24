@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.util.Log;
 
 import com.a58070096.patcharaponjoksamut.steamstalker.Model.GameCacheModel;
+import com.a58070096.patcharaponjoksamut.steamstalker.Model.GameModel;
 import com.a58070096.patcharaponjoksamut.steamstalker.Model.GameTileModel;
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
@@ -29,6 +30,7 @@ public class SteamAPIViewModel {
     public interface SteaAPIVIewModelListener {
         void getTop100GameResponse(ArrayList<GameTileModel> allGame);
         void searchGameResponse(ArrayList<GameTileModel> allGame);
+        void getGameDetailRespone(GameModel game);
     }
 
     private SteaAPIVIewModelListener listener;
@@ -151,6 +153,89 @@ public class SteamAPIViewModel {
                     });
         }
 
+    }
+
+    public void getGameDetails(String appId) {
+        getGameDetailFromSteam(appId);
+    }
+
+    private void getGameDetailFromSteam(final String appId) {
+        AndroidNetworking.get("http://store.steampowered.com/api/appdetails?appids={appid}&cc=us")
+                .addPathParameter("appid", appId)
+                .setPriority(Priority.HIGH)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        GameModel game = new GameModel();
+                        try {
+                            JSONObject data = response.getJSONObject(appId).getJSONObject("data");
+                            game.setType(data.getString("type"));
+                            game.setName(data.getString("name"));
+                            game.setAppId(data.getString("steam_appid"));
+                            game.setDescription(data.getString("short_description"));
+                            game.setHeaderImageUrl(Uri.parse(data.getString("header_image")));
+                            game.setWebsite(data.getString("website"));
+                            game.setDeveloper(data.getString("developers"));
+                            game.setPublisher(data.getString("publishers"));
+                            try {
+                                int score = data.getJSONObject("metacritic").getInt("score");
+                                game.setMetacriticScore(score);
+                            } catch (Exception e){
+                                game.setMetacriticScore(-1);
+                            }
+                            game.setReleaseDate(data.getJSONObject("release_date").getString("date"));
+                            game.setComingSoon(data.getJSONObject("release_date").getBoolean("coming_soon"));
+                            game.setSupportLinux(data.getJSONObject("platforms").getBoolean("linux"));
+                            game.setSupportMacos(data.getJSONObject("platforms").getBoolean("mac"));
+                            game.setSupportWindows(data.getJSONObject("platforms").getBoolean("true"));
+
+
+                        } catch (JSONException e) {
+                            Log.v("Debug", e.getMessage());
+                            listener.getGameDetailRespone(null);
+                        }
+
+                        getGameDetailsFromSteamSpy(appId, game);
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        Log.v("Debug", anError.getMessage());
+                        listener.getGameDetailRespone(null);
+                    }
+                });
+    }
+
+
+    private void getGameDetailsFromSteamSpy(String appId, final GameModel game) {
+        AndroidNetworking.get("steamspy.com/api.php?request=appdetails&appid={appid}")
+                .addPathParameter("appid", appId)
+                .setPriority(Priority.HIGH)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        try {
+                            game.setRank(response.getInt("score_rank"));
+                            game.setOwners(response.getInt("owners"));
+                            game.setPlayerIn2Weeks(response.getInt("players_2weeks"));
+                            game.setPrice(response.getInt("price"));
+                        } catch (JSONException e) {
+                            Log.v("Debug", e.getMessage());
+                            listener.getGameDetailRespone(null);
+                        }
+
+                        listener.getGameDetailRespone(game);
+                    }
+
+                    @Override
+                    public void onError(ANError anError) {
+                        Log.v("Debug", anError.getMessage());
+                        listener.getGameDetailRespone(null);
+                    }
+                });
     }
 
 
