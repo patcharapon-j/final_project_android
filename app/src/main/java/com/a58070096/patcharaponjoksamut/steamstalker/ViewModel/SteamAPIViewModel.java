@@ -132,7 +132,7 @@ public class SteamAPIViewModel {
                                     Collections.sort(allGame, new Comparator<GameTileModel>() {
                                         @Override
                                         public int compare(GameTileModel gameTileModel, GameTileModel t1) {
-                                            return gameTileModel.getName().compareTo(t1.getName());
+                                            return gameTileModel.getRank() - t1.getRank();
                                         }
                                     });
                                     listener.searchGameResponse(allGame);
@@ -145,7 +145,7 @@ public class SteamAPIViewModel {
 
                         @Override
                         public void onError(ANError anError) {
-                            Log.d("Debug", anError.toString());
+                            Log.d("Debug", anError.getMessage());
                             //listener.searchGameResponse(new ArrayList<GameTileModel>());
                         }
                     });

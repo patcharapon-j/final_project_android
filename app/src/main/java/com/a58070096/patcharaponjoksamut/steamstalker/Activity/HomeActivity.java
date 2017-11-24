@@ -33,6 +33,7 @@ public class HomeActivity extends AppCompatActivity implements ProfileFragment.P
     @BindView(R.id.game_container) View gameContainer;
     @BindView(R.id.profile_container) View profileContainer;
     @BindView(R.id.news_container) View newsContainer;
+    @BindView(R.id.hot_container) View hotContainer;
 
 
     @Override
@@ -44,6 +45,10 @@ public class HomeActivity extends AppCompatActivity implements ProfileFragment.P
         AndroidNetworking.setParserFactory(new JacksonParserFactory());
 
         ButterKnife.bind(this);
+
+        ProfileFragment profileFragment = (ProfileFragment) getSupportFragmentManager().findFragmentById(R.id.profile_fragment);
+        profileFragment.setListener(this);
+
 
         getSupportActionBar().hide();
 
@@ -65,10 +70,12 @@ public class HomeActivity extends AppCompatActivity implements ProfileFragment.P
 
     private void initializeBottomNavigationBar() {
         AHBottomNavigationItem newsItem = new AHBottomNavigationItem(R.string.text_web, R.drawable.ic_web_black_24dp, R.color.white);
+        final AHBottomNavigationItem hotItem = new AHBottomNavigationItem(R.string.text_hot, R.drawable.ic_whatshot_black_24dp, R.color.white);
         AHBottomNavigationItem gameItem = new AHBottomNavigationItem(R.string.text_videogame, R.drawable.ic_videogame_asset_black_24dp, R.color.white);
         AHBottomNavigationItem profileItem = new AHBottomNavigationItem(R.string.text_person, R.drawable.ic_person_black_24dp, R.color.white);
 
         bottomNavigationView.addItem(newsItem);
+        bottomNavigationView.addItem(hotItem);
         bottomNavigationView.addItem(gameItem);
         bottomNavigationView.addItem(profileItem);
 
@@ -91,16 +98,25 @@ public class HomeActivity extends AppCompatActivity implements ProfileFragment.P
                 switch (position) {
                     case 0:
                         newsContainer.setVisibility(View.VISIBLE);
+                        hotContainer.setVisibility(View.INVISIBLE);
                         gameContainer.setVisibility(View.INVISIBLE);
                         profileContainer.setVisibility(View.INVISIBLE);
                         break;
                     case 1:
                         newsContainer.setVisibility(View.INVISIBLE);
-                        gameContainer.setVisibility(View.VISIBLE);
+                        hotContainer.setVisibility(View.VISIBLE);
+                        gameContainer.setVisibility(View.INVISIBLE);
                         profileContainer.setVisibility(View.INVISIBLE);
                         break;
                     case 2:
                         newsContainer.setVisibility(View.INVISIBLE);
+                        hotContainer.setVisibility(View.INVISIBLE);
+                        gameContainer.setVisibility(View.VISIBLE);
+                        profileContainer.setVisibility(View.INVISIBLE);
+                        break;
+                    case 3:
+                        newsContainer.setVisibility(View.INVISIBLE);
+                        hotContainer.setVisibility(View.INVISIBLE);
                         gameContainer.setVisibility(View.INVISIBLE);
                         profileContainer.setVisibility(View.VISIBLE);
                         break;

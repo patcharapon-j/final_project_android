@@ -53,6 +53,7 @@ public class ProfileFragment extends Fragment {
 
         displayUserInfo();
 
+
         return view;
     }
 

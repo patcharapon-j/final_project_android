@@ -52,9 +52,6 @@ public class GameFragment extends Fragment implements SteamAPIViewModel.SteaAPIV
     @BindView(R.id.ultimate_recycler_view)
     UltimateRecyclerView recyclerView;
 
-    @BindView(R.id.game_bar_text)
-    TextView gameBarTextView;
-
     @BindView(R.id.activity_indicator_container) View activityIndicatiorContainer;
 
     private List<GameTileModel> allGameTileModel;
@@ -84,13 +81,13 @@ public class GameFragment extends Fragment implements SteamAPIViewModel.SteaAPIV
 
     private void setupSearchView() {
         AllGameDataCache.getInstance().setListener(this);
-        gameBarTextView.setText(R.string.default_game_bar_text);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
                 if(s.isEmpty() || s.equals("")) {
-                    steamViewModel.getTop100Game();
+
                 } else {
+                    activityIndicatiorContainer.setVisibility(View.VISIBLE);
                     AllGameDataCache.getInstance().searchForGame(s);
                 }
                 return false;
@@ -105,8 +102,6 @@ public class GameFragment extends Fragment implements SteamAPIViewModel.SteaAPIV
 
     private void initializeViewModel() {
         steamViewModel.setListener(this);
-        activityIndicatiorContainer.setVisibility(View.VISIBLE);
-        steamViewModel.getTop100Game();
     }
 
     private void loadGameTileData() {
@@ -122,16 +117,6 @@ public class GameFragment extends Fragment implements SteamAPIViewModel.SteaAPIV
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
 
-        recyclerView.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                activityIndicatiorContainer.setVisibility(View.VISIBLE);
-                adapter.setGameList(new ArrayList<GameTileModel>());
-                adapter.notifyDataSetChanged();
-                steamViewModel.getTop100Game();
-            }
-        });
-
     }
 
     @Override
@@ -139,17 +124,16 @@ public class GameFragment extends Fragment implements SteamAPIViewModel.SteaAPIV
         adapter.setGameList(allGame);
         adapter.notifyDataSetChanged();
         recyclerView.setRefreshing(false);
-        gameBarTextView.setText(R.string.default_game_bar_text);
         activityIndicatiorContainer.setVisibility(View.INVISIBLE);
 
     }
 
     @Override
     public void searchGameResponse(ArrayList<GameTileModel> allGame) {
+        recyclerView.hideEmptyView();
         adapter.setGameList(allGame);
         adapter.notifyDataSetChanged();
         recyclerView.setRefreshing(false);
-        gameBarTextView.setText(searchView.getQuery());
         activityIndicatiorContainer.setVisibility(View.INVISIBLE);
     }
 
@@ -163,5 +147,10 @@ public class GameFragment extends Fragment implements SteamAPIViewModel.SteaAPIV
     @Override
     public void onNotFound() {
         Log.v("Debug", "Not Found");
+        adapter.setGameList(new ArrayList<GameTileModel>());
+        adapter.notifyDataSetChanged();
+        recyclerView.setRefreshing(false);
+        recyclerView.showEmptyView();
+        activityIndicatiorContainer.setVisibility(View.INVISIBLE);
     }
 }
