@@ -30,7 +30,8 @@ public class SteamAPIViewModel {
     public interface SteaAPIVIewModelListener {
         void getTop100GameResponse(ArrayList<GameTileModel> allGame);
         void searchGameResponse(ArrayList<GameTileModel> allGame);
-        void getGameDetailRespone(GameModel game);
+        void getGameDetailResponse(GameModel game);
+        void onSteamAccessDenied();
     }
 
     private SteaAPIVIewModelListener listener;
@@ -89,7 +90,10 @@ public class SteamAPIViewModel {
 
                                         @Override
                                         public void onError(ANError anError) {
-                                            Log.d("Debug", anError.toString());
+                                            if(anError.getErrorCode() == 401) {
+                                                listener.onSteamAccessDenied();
+                                            }
+                                            Log.d("Debug", anError.getMessage());
                                             listener.getTop100GameResponse(new ArrayList<GameTileModel>());
                                         }
                                     });
@@ -99,7 +103,10 @@ public class SteamAPIViewModel {
 
                     @Override
                     public void onError(ANError anError) {
-                        Log.d("Debug", anError.toString());
+                        if(anError.getErrorCode() == 401) {
+                            listener.onSteamAccessDenied();
+                        }
+                        Log.d("Debug", anError.getMessage());
                         listener.getTop100GameResponse(new ArrayList<GameTileModel>());
                     }
                 });
@@ -147,6 +154,9 @@ public class SteamAPIViewModel {
 
                         @Override
                         public void onError(ANError anError) {
+                            if(anError.getErrorCode() == 401) {
+                                listener.onSteamAccessDenied();
+                            }
                             Log.d("Debug", anError.getMessage());
                             //listener.searchGameResponse(new ArrayList<GameTileModel>());
                         }
@@ -188,28 +198,30 @@ public class SteamAPIViewModel {
                             game.setComingSoon(data.getJSONObject("release_date").getBoolean("coming_soon"));
                             game.setSupportLinux(data.getJSONObject("platforms").getBoolean("linux"));
                             game.setSupportMacos(data.getJSONObject("platforms").getBoolean("mac"));
-                            game.setSupportWindows(data.getJSONObject("platforms").getBoolean("true"));
-
-
+                            game.setSupportWindows(data.getJSONObject("platforms").getBoolean("windows"));
+                            getGameDetailsFromSteamSpy(appId, game);
                         } catch (JSONException e) {
-                            Log.v("Debug", e.getMessage());
-                            listener.getGameDetailRespone(null);
+                            Log.v("Debugs1", e.getMessage());
+                            listener.getGameDetailResponse(null);
+                            return;
                         }
-
-                        getGameDetailsFromSteamSpy(appId, game);
                     }
 
                     @Override
                     public void onError(ANError anError) {
-                        Log.v("Debug", anError.getMessage());
-                        listener.getGameDetailRespone(null);
+                        if(anError.getErrorCode() == 401) {
+                            listener.onSteamAccessDenied();
+                        }
+                        Log.v("Debugs2", anError.getMessage());
+                        listener.getGameDetailResponse(null);
+                        return;
                     }
                 });
     }
 
 
     private void getGameDetailsFromSteamSpy(String appId, final GameModel game) {
-        AndroidNetworking.get("steamspy.com/api.php?request=appdetails&appid={appid}")
+        AndroidNetworking.get("https://steamspy.com/api.php?request=appdetails&appid={appid}")
                 .addPathParameter("appid", appId)
                 .setPriority(Priority.HIGH)
                 .build()
@@ -223,17 +235,22 @@ public class SteamAPIViewModel {
                             game.setPlayerIn2Weeks(response.getInt("players_2weeks"));
                             game.setPrice(response.getInt("price"));
                         } catch (JSONException e) {
-                            Log.v("Debug", e.getMessage());
-                            listener.getGameDetailRespone(null);
+                            Log.v("Debugs3", e.getMessage());
+                            listener.getGameDetailResponse(null);
+                            return;
                         }
 
-                        listener.getGameDetailRespone(game);
+                        listener.getGameDetailResponse(game);
                     }
 
                     @Override
                     public void onError(ANError anError) {
-                        Log.v("Debug", anError.getMessage());
-                        listener.getGameDetailRespone(null);
+                        if(anError.getErrorCode() == 401) {
+                            listener.onSteamAccessDenied();
+                        }
+                        Log.v("Debugs4", anError.getMessage());
+                        listener.getGameDetailResponse(null);
+                        return;
                     }
                 });
     }

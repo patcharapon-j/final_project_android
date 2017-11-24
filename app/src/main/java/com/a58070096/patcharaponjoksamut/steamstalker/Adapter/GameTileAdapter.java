@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.a58070096.patcharaponjoksamut.steamstalker.Activity.GameDetailActivity;
+import com.a58070096.patcharaponjoksamut.steamstalker.Activity.HomeActivity;
 import com.a58070096.patcharaponjoksamut.steamstalker.Model.GameTileModel;
 import com.a58070096.patcharaponjoksamut.steamstalker.R;
 import com.bumptech.glide.Glide;
@@ -43,9 +44,8 @@ public class GameTileAdapter extends UltimateViewAdapter<GameTileAdapter.MyViewH
         @Override
         public void onClick(View view) {
             String appId = gameList.get(getAdapterPosition()).getAppId();
-            Intent intent = new Intent(activity, GameDetailActivity.class);
-            intent.putExtra("appId", appId);
-            activity.startActivity(intent);
+            HomeActivity homeActivity = (HomeActivity) activity;
+            homeActivity.showGameDetail(appId);
         }
     }
 

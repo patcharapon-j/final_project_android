@@ -24,16 +24,8 @@ public class GameTileModel {
         return appId;
     }
 
-    public void setAppId(String appId) {
-        this.appId = appId;
-    }
-
     public int getRank() {
         return rank;
-    }
-
-    public void setRank(int rank) {
-        this.rank = rank;
     }
 
     public String getName() {
@@ -48,7 +40,4 @@ public class GameTileModel {
         return imgUrl;
     }
 
-    public void setImgUrl(Uri imgUrl) {
-        this.imgUrl = imgUrl;
-    }
 }

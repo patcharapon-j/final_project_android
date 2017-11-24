@@ -50,6 +50,9 @@ dependencies {
     compile 'com.amitshekhar.android:jackson-android-networking:1.0.0'
 
     compile 'cn.hugeterry.coordinatortablayout:coordinatortablayout:1.2.0'
+
+    compile 'org.parceler:parceler-api:1.1.6'
+    annotationProcessor 'org.parceler:parceler:1.1.6'
 }
 
 

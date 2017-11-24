@@ -2,29 +2,35 @@ package com.a58070096.patcharaponjoksamut.steamstalker.Model;
 
 import android.net.Uri;
 
+import org.parceler.Parcel;
+
 /**
  * Created by patcharaponjoksamut on 24/11/2017 AD.
  */
 
+@Parcel
 public class GameModel {
-    private String name;
-    private String appId;
-    private String description;
-    private Uri headerImageUrl;
-    private String website;
-    private String developer;
-    private String publisher;
-    private Boolean supportWindows;
-    private Boolean supportLinux;
-    private Boolean SupportMacos;
-    private int metacriticScore;
-    private String releaseDate;
-    private Boolean isComingSoon;
-    private int rank;
-    private int owners;
-    private int playerIn2Weeks;
-    private int price;
-    private String type;
+    String name;
+    String appId;
+    String description;
+    Uri headerImageUrl;
+    String website;
+    String developer;
+    String publisher;
+    Boolean supportWindows;
+    Boolean supportLinux;
+    Boolean SupportMacos;
+    int metacriticScore;
+    String releaseDate;
+    Boolean isComingSoon;
+    int rank;
+    int owners;
+    int playerIn2Weeks;
+    int price;
+    String type;
+
+    public GameModel() {
+    }
 
     public String getName() {
         return name;
