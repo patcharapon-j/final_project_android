@@ -136,7 +136,10 @@ public class SteamAPIViewModel {
                                         Uri.parse(data.getString("header_image")),
                                         appid,
                                         0);
-                                allGame.add(game);
+                                if(data.getString("type").equals("game")){
+                                    allGame.add(game);
+                                }
+
                                 if(recived[0] >= count) {
                                     Collections.sort(allGame, new Comparator<GameTileModel>() {
                                         @Override
