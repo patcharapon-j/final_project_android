@@ -90,9 +90,10 @@ public class SteamAPIViewModel {
 
                                         @Override
                                         public void onError(ANError anError) {
-                                            if(anError.getErrorCode() == 401) {
+                                            if(anError.getErrorCode() == 403) {
                                                 listener.onSteamAccessDenied();
                                             }
+                                            Log.v("Debug", String.valueOf(anError.getErrorCode()));
                                             Log.d("Debug", anError.getMessage());
                                             listener.getTop100GameResponse(new ArrayList<GameTileModel>());
                                         }
@@ -103,9 +104,10 @@ public class SteamAPIViewModel {
 
                     @Override
                     public void onError(ANError anError) {
-                        if(anError.getErrorCode() == 401) {
+                        if(anError.getErrorCode() == 403) {
                             listener.onSteamAccessDenied();
                         }
+                        Log.v("Debug", String.valueOf(anError.getErrorCode()));
                         Log.d("Debug", anError.getMessage());
                         listener.getTop100GameResponse(new ArrayList<GameTileModel>());
                     }
@@ -157,9 +159,10 @@ public class SteamAPIViewModel {
 
                         @Override
                         public void onError(ANError anError) {
-                            if(anError.getErrorCode() == 401) {
+                            if(anError.getErrorCode() == 403) {
                                 listener.onSteamAccessDenied();
                             }
+                            Log.v("Debug", String.valueOf(anError.getErrorCode()));
                             Log.d("Debug", anError.getMessage());
                             //listener.searchGameResponse(new ArrayList<GameTileModel>());
                         }
@@ -212,9 +215,11 @@ public class SteamAPIViewModel {
 
                     @Override
                     public void onError(ANError anError) {
-                        if(anError.getErrorCode() == 401) {
+                        if(anError.getErrorCode() == 403) {
+                            Log.v("Debugs2", "Steam Block");
                             listener.onSteamAccessDenied();
                         }
+                        Log.v("Debugs2", String.valueOf(anError.getErrorCode()));
                         Log.v("Debugs2", anError.getMessage());
                         listener.getGameDetailResponse(null);
                         return;
@@ -248,9 +253,10 @@ public class SteamAPIViewModel {
 
                     @Override
                     public void onError(ANError anError) {
-                        if(anError.getErrorCode() == 401) {
+                        if(anError.getErrorCode() == 403) {
                             listener.onSteamAccessDenied();
                         }
+                        Log.v("Debugs4", String.valueOf(anError.getErrorCode()));
                         Log.v("Debugs4", anError.getMessage());
                         listener.getGameDetailResponse(null);
                         return;

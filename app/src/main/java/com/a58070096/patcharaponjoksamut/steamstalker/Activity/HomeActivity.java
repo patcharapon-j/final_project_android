@@ -186,9 +186,13 @@ public class HomeActivity extends AppCompatActivity implements ProfileFragment.P
     public void onSteamAccessDenied() {
         StyleableToast toast = new StyleableToast
                 .Builder(this)
-                .text("Too much request to Steam API. Please wait a while and try again!")
+                .text("Too much request to Steam API. Please wait a while (Usually 10 minutes) and try again!")
                 .textColor(Color.WHITE)
                 .backgroundColor(getResources().getColor(R.color.colorDarkRed))
                 .build();
+
+        toast.show();
+
+        activityIndicatorContainer.setVisibility(View.INVISIBLE);
     }
 }

@@ -129,10 +129,14 @@ public class HotFragment extends Fragment implements SteamAPIViewModel.SteaAPIVI
     public void onSteamAccessDenied() {
         StyleableToast toast = new StyleableToast
                 .Builder(getActivity())
-                .text("Too much request to Steam API. Please wait a while and try again!")
+                .text("Too much request to Steam API. Please wait a while (Usually 10 minutes) and try again!")
                 .textColor(Color.WHITE)
                 .backgroundColor(getResources().getColor(R.color.colorDarkRed))
                 .build();
+
+        toast.show();
+
+        activityIndicatiorContainer.setVisibility(View.INVISIBLE);
     }
 
 }
