@@ -42,6 +42,7 @@ public class HomeActivity extends AppCompatActivity implements ProfileFragment.P
     @BindView(R.id.profile_container) View profileContainer;
     @BindView(R.id.news_container) View newsContainer;
     @BindView(R.id.hot_container) View hotContainer;
+    @BindView(R.id.activity_indicator_container) View activityIndicatorContainer;
 
 
     private SteamAPIViewModel steamAPIViewModel = new SteamAPIViewModel();
@@ -142,6 +143,7 @@ public class HomeActivity extends AppCompatActivity implements ProfileFragment.P
     }
 
     public void showGameDetail(String appId) {
+        this.activityIndicatorContainer.setVisibility(View.VISIBLE);
         StyleableToast toast = new StyleableToast
                 .Builder(this)
                 .text("Load Data for " + appId)
@@ -163,6 +165,7 @@ public class HomeActivity extends AppCompatActivity implements ProfileFragment.P
 
     @Override
     public void getGameDetailResponse(GameModel game) {
+        this.activityIndicatorContainer.setVisibility(View.INVISIBLE);
         if(game == null) {
             StyleableToast toast = new StyleableToast
                     .Builder(this)
