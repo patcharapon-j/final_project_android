@@ -77,10 +77,10 @@ public class AllGameDataCache {
 
         ArrayList<String> result = new ArrayList<>();
         for(GameCacheModel game: allGame) {
-            count += 1;
             String lowName = name.toLowerCase();
             String gameName = game.getName().toLowerCase();
             if(gameName.contains(lowName)) {
+                count += 1;
                 result.add(game.getAppId());
             }
             if(count >= queryLimit) {

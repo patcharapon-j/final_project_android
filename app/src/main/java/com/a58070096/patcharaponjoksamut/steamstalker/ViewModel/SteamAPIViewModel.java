@@ -238,7 +238,11 @@ public class SteamAPIViewModel {
                     public void onResponse(JSONObject response) {
 
                         try {
-                            game.setRank(response.getInt("score_rank"));
+                            try {
+                                game.setRank(response.getInt("score_rank"));
+                            } catch (Exception e) {
+                                game.setRank(-1);
+                            }
                             game.setOwners(response.getInt("owners"));
                             game.setPlayerIn2Weeks(response.getInt("players_2weeks"));
                             game.setPrice(response.getInt("price"));

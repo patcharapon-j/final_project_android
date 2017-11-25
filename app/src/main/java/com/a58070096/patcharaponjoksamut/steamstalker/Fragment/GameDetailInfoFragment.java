@@ -45,6 +45,9 @@ public class GameDetailInfoFragment extends Fragment {
     @BindView(R.id.game_detail_info_price)
     TextView priceTextView;
 
+    @BindView(R.id.game_detail_info_date)
+    TextView dateTextView;
+
     private GameModel game;
     private GameDetailInfoViewModel gameDetailInfoViewModel;
 
@@ -76,10 +79,12 @@ public class GameDetailInfoFragment extends Fragment {
         if(!gameDetailInfoViewModel.getGameWebsite().equals("N/A")) {
             websiteTextView.setText(Html.fromHtml("<u>"+gameDetailInfoViewModel.getGameWebsite()+"</u>"));
         } else {
-            websiteTextView.setText("N?A");
+            websiteTextView.setText("N/A");
         }
         supportTextView.setText(gameDetailInfoViewModel.getSupportedOperatingSystem());
         priceTextView.setText(gameDetailInfoViewModel.getGamePrice());
+        dateTextView.setText(gameDetailInfoViewModel.getGameDate());
+
     }
 
     @OnClick(R.id.game_detail_info_website)

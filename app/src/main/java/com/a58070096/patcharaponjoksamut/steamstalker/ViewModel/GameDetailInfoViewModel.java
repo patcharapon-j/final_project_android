@@ -26,7 +26,7 @@ public class GameDetailInfoViewModel {
     }
 
     public String getGameDeveloper() {
-        if(game.getDeveloper().equals("null")) {
+        if(game.getDeveloper().equals("null") || game.getDeveloper().isEmpty()) {
             return "N/A";
         }
         String developer = game.getDeveloper();
@@ -37,7 +37,7 @@ public class GameDetailInfoViewModel {
     }
 
     public String getGamePublisher() {
-        if(game.getPublisher().equals("null")) {
+        if(game.getPublisher().equals("null") || game.getPublisher().isEmpty()) {
             return "N/A";
         }
         String publisher = game.getPublisher();
@@ -82,6 +82,14 @@ public class GameDetailInfoViewModel {
             output += "$";
 
             return output;
+        }
+    }
+
+    public String getGameDate() {
+        if(game.getComingSoon()) {
+            return "Coming Soon";
+        } else {
+            return game.getReleaseDate();
         }
     }
 }
