@@ -1,6 +1,7 @@
 package com.a58070096.patcharaponjoksamut.steamstalker.Fragment;
 
 
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 
 import com.a58070096.patcharaponjoksamut.steamstalker.Adapter.GameTileAdapter;
 import com.a58070096.patcharaponjoksamut.steamstalker.Model.GameCacheModel;
+import com.a58070096.patcharaponjoksamut.steamstalker.Model.GameModel;
 import com.a58070096.patcharaponjoksamut.steamstalker.Model.GameTileModel;
 import com.a58070096.patcharaponjoksamut.steamstalker.R;
 import com.a58070096.patcharaponjoksamut.steamstalker.Singleton.AllGameDataCache;
@@ -30,6 +32,7 @@ import com.jacksonandroidnetworking.JacksonParserFactory;
 import com.marshalchen.ultimaterecyclerview.ObservableScrollState;
 import com.marshalchen.ultimaterecyclerview.ObservableScrollViewCallbacks;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
+import com.muddzdev.styleabletoastlibrary.StyleableToast;
 
 import org.w3c.dom.Text;
 
@@ -134,6 +137,24 @@ public class GameFragment extends Fragment implements SteamAPIViewModel.SteaAPIV
         adapter.setGameList(allGame);
         adapter.notifyDataSetChanged();
         recyclerView.setRefreshing(false);
+        activityIndicatiorContainer.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void getGameDetailResponse(GameModel game) {
+
+    }
+
+    @Override
+    public void onSteamAccessDenied() {
+        StyleableToast toast = new StyleableToast
+                .Builder(getActivity())
+                .text("Too much request to Steam API. Please wait a while (Usually 10 minutes) and try again!")
+                .textColor(Color.WHITE)
+                .backgroundColor(getResources().getColor(R.color.colorDarkRed))
+                .build();
+
+        toast.show();
         activityIndicatiorContainer.setVisibility(View.INVISIBLE);
     }
 

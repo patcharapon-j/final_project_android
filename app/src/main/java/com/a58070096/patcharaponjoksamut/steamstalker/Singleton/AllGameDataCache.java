@@ -24,6 +24,8 @@ public class AllGameDataCache {
 
     private static AllGameDataCache instance = new AllGameDataCache();
 
+    final int queryLimit = 30;
+
     public interface SearchForGameResult {
         void onFoundGame(ArrayList<String> result);
         void onNotFound();
@@ -70,12 +72,19 @@ public class AllGameDataCache {
     }
 
     private void lookupGame(String name) {
+
+        int count = 0;
+
         ArrayList<String> result = new ArrayList<>();
         for(GameCacheModel game: allGame) {
             String lowName = name.toLowerCase();
             String gameName = game.getName().toLowerCase();
             if(gameName.contains(lowName)) {
+                count += 1;
                 result.add(game.getAppId());
+            }
+            if(count >= queryLimit) {
+                break;
             }
         }
 

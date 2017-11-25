@@ -14,18 +14,26 @@ import android.view.View;
 import com.a58070096.patcharaponjoksamut.steamstalker.Fragment.GameFragment;
 import com.a58070096.patcharaponjoksamut.steamstalker.Fragment.NewsFragment;
 import com.a58070096.patcharaponjoksamut.steamstalker.Fragment.ProfileFragment;
+import com.a58070096.patcharaponjoksamut.steamstalker.Model.GameModel;
+import com.a58070096.patcharaponjoksamut.steamstalker.Model.GameTileModel;
 import com.a58070096.patcharaponjoksamut.steamstalker.R;
+import com.a58070096.patcharaponjoksamut.steamstalker.ViewModel.SteamAPIViewModel;
 import com.androidnetworking.AndroidNetworking;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.jacksonandroidnetworking.JacksonParserFactory;
+import com.muddzdev.styleabletoastlibrary.StyleableToast;
+
+import org.parceler.Parcels;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class HomeActivity extends AppCompatActivity implements ProfileFragment.ProfileFragmentListener {
+public class HomeActivity extends AppCompatActivity implements ProfileFragment.ProfileFragmentListener, SteamAPIViewModel.SteaAPIVIewModelListener {
 
     @BindView(R.id.bottom_navigation)
     AHBottomNavigation bottomNavigationView;
@@ -34,7 +42,10 @@ public class HomeActivity extends AppCompatActivity implements ProfileFragment.P
     @BindView(R.id.profile_container) View profileContainer;
     @BindView(R.id.news_container) View newsContainer;
     @BindView(R.id.hot_container) View hotContainer;
+    @BindView(R.id.activity_indicator_container) View activityIndicatorContainer;
 
+
+    private SteamAPIViewModel steamAPIViewModel = new SteamAPIViewModel();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +62,8 @@ public class HomeActivity extends AppCompatActivity implements ProfileFragment.P
 
 
         getSupportActionBar().hide();
+
+        steamAPIViewModel.setListener(this);
 
         this.initializeBottomNavigationBar();
         this.checkForLogin();
@@ -129,9 +142,53 @@ public class HomeActivity extends AppCompatActivity implements ProfileFragment.P
 
     }
 
+    public void showGameDetail(String appId) {
+        this.activityIndicatorContainer.setVisibility(View.VISIBLE);
+        steamAPIViewModel.getGameDetails(appId);
+
+    }
 
     @Override
     public void onLogout() {
         this.checkForLogin();
+    }
+
+    @Override
+    public void getTop100GameResponse(ArrayList<GameTileModel> allGame) {}
+
+    @Override
+    public void searchGameResponse(ArrayList<GameTileModel> allGame) {}
+
+    @Override
+    public void getGameDetailResponse(GameModel game) {
+        this.activityIndicatorContainer.setVisibility(View.INVISIBLE);
+        if(game == null) {
+            StyleableToast toast = new StyleableToast
+                    .Builder(this)
+                    .text("Load Failed! Please Try Again later")
+                    .textColor(Color.WHITE)
+                    .backgroundColor(getResources().getColor(R.color.colorDarkRed))
+                    .build();
+
+            toast.show();
+        } else {
+            Intent intent = new Intent(this, GameDetailActivity.class);
+            intent.putExtra("game", Parcels.wrap(game));
+            this.startActivity(intent);
+        }
+    }
+
+    @Override
+    public void onSteamAccessDenied() {
+        StyleableToast toast = new StyleableToast
+                .Builder(this)
+                .text("Too much request to Steam API. Please wait a while (Usually 10 minutes) and try again!")
+                .textColor(Color.WHITE)
+                .backgroundColor(getResources().getColor(R.color.colorDarkRed))
+                .build();
+
+        toast.show();
+
+        activityIndicatorContainer.setVisibility(View.INVISIBLE);
     }
 }
