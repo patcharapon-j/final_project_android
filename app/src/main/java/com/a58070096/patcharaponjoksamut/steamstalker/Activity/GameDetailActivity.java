@@ -47,10 +47,14 @@ public class GameDetailActivity extends AppCompatActivity {
 
     private void setupCoordinatorLayout() {
 
-        gameDetailViewPager.setAdapter(new GameDetailAdapter(getSupportFragmentManager()));
+        GameDetailAdapter adapter = new GameDetailAdapter(getSupportFragmentManager());
+        adapter.setGame(game);
+
+        gameDetailViewPager.setAdapter(adapter);
 
         coordinatorTabLayout.setTitle(game.getName())
                 .setupWithViewPager(gameDetailViewPager)
+                .setTranslucentStatusBar(this)
                 .setLoadHeaderImagesListener(new LoadHeaderImagesListener() {
                     @Override
                     public void loadHeaderImages(ImageView imageView, TabLayout.Tab tab) {
