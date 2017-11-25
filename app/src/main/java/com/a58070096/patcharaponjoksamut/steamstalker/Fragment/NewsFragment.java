@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.a58070096.patcharaponjoksamut.steamstalker.Adapter.GameTileAdapter;
 import com.a58070096.patcharaponjoksamut.steamstalker.Adapter.NewsTileAdapter;
+import com.a58070096.patcharaponjoksamut.steamstalker.Model.NewsQueryModel;
 import com.a58070096.patcharaponjoksamut.steamstalker.Model.NewsTileModel;
 import com.a58070096.patcharaponjoksamut.steamstalker.R;
 import com.a58070096.patcharaponjoksamut.steamstalker.ViewModel.SteamNewsViewModel;
@@ -38,7 +39,7 @@ public class NewsFragment extends Fragment implements SteamNewsViewModel.OnGetNe
 
     private NewsTileAdapter adapter;
     private SteamNewsViewModel steamNewsViewModel;
-    private String appid;
+    private ArrayList<NewsQueryModel> allNewsQuery = new ArrayList<>();
 
     public NewsFragment() {
         // Required empty public constructor
@@ -55,7 +56,18 @@ public class NewsFragment extends Fragment implements SteamNewsViewModel.OnGetNe
         setupRecyclerView(view);
         setupViewModel();
 
-        getNewsFor("440", "test");
+        NewsQueryModel queryModel = new NewsQueryModel();
+        queryModel.setAppId("440");
+        queryModel.setAppName("Test1");
+
+        NewsQueryModel queryModel2 = new NewsQueryModel();
+        queryModel2.setAppId("420");
+        queryModel2.setAppName("test2");
+
+        allNewsQuery.add(queryModel);
+        allNewsQuery.add(queryModel2);
+
+        getNewsFor(allNewsQuery);
 
         return view;
     }
@@ -74,14 +86,14 @@ public class NewsFragment extends Fragment implements SteamNewsViewModel.OnGetNe
         recyclerView.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getNewsFor("440", "Team Test");
+                getNewsFor(allNewsQuery);
             }
         });
     }
 
-    private void getNewsFor(String appId, String name) {
+    private void getNewsFor(ArrayList<NewsQueryModel> allNews) {
         activityIndicatiorContainer.setVisibility(View.VISIBLE);
-        steamNewsViewModel.getNewsForApp(appId, name);
+        steamNewsViewModel.getNewsForApp(allNews);
     }
 
     private void setupViewModel() {
@@ -106,5 +118,9 @@ public class NewsFragment extends Fragment implements SteamNewsViewModel.OnGetNe
             adapter.setAllNews(result);
             adapter.notifyDataSetChanged();
         }
+    }
+
+    public void setAllNewsQuery(ArrayList<NewsQueryModel> allNewsQuery) {
+        this.allNewsQuery = allNewsQuery;
     }
 }
