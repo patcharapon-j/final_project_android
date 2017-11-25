@@ -40,7 +40,7 @@ public class SteamNewsViewModel {
             String appId = queryModel.getAppId();
             final String name = queryModel.getAppName();
             Log.v("Debug", "Start fetching news for " + appId + " " + name);
-            AndroidNetworking.get("  http://api.steampowered.com/ISteamNews/GetNewsForApp/v2/?appid={appid}&count=10&maxlength=200")
+            AndroidNetworking.get("  http://api.steampowered.com/ISteamNews/GetNewsForApp/v2/?appid={appid}&count=10&maxlength=100")
                     .addPathParameter("appid", appId)
                     .setPriority(Priority.HIGH)
                     .build()

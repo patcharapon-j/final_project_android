@@ -46,6 +46,7 @@ public class GameDetailAdapter extends FragmentPagerAdapter {
                 model.setAppId(game.getAppId());
                 query.add(model);
                 newsFragment.setAllNewsQuery(query);
+                newsFragment.setMode(-1);
                 return newsFragment;
 
         }

@@ -3,6 +3,7 @@ package com.a58070096.patcharaponjoksamut.steamstalker.Fragment;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -35,11 +36,17 @@ public class NewsFragment extends Fragment implements SteamNewsViewModel.OnGetNe
     @BindView(R.id.ultimate_recycler_view)
     UltimateRecyclerView recyclerView;
 
-    @BindView(R.id.activity_indicator_container) View activityIndicatiorContainer;
+    @BindView(R.id.activity_indicator_container)
+    View activityIndicatiorContainer;
+
+    @BindView(R.id.news_header_view)
+    ConstraintLayout layout;
 
     private NewsTileAdapter adapter;
     private SteamNewsViewModel steamNewsViewModel;
     private ArrayList<NewsQueryModel> allNewsQuery = new ArrayList<>();
+
+    private int mode = 0;
 
     public NewsFragment() {
         // Required empty public constructor
@@ -55,6 +62,10 @@ public class NewsFragment extends Fragment implements SteamNewsViewModel.OnGetNe
 
         setupRecyclerView(view);
         setupViewModel();
+
+        if(mode != 0) {
+            layout.setMaxHeight(0);
+        }
 
         getNewsFor(allNewsQuery);
 
@@ -81,8 +92,10 @@ public class NewsFragment extends Fragment implements SteamNewsViewModel.OnGetNe
     }
 
     private void getNewsFor(ArrayList<NewsQueryModel> allNews) {
-        activityIndicatiorContainer.setVisibility(View.VISIBLE);
-        steamNewsViewModel.getNewsForApp(allNews);
+        if(allNews.size() != 0) {
+            activityIndicatiorContainer.setVisibility(View.VISIBLE);
+            steamNewsViewModel.getNewsForApp(allNews);
+        }
     }
 
     private void setupViewModel() {
@@ -94,7 +107,7 @@ public class NewsFragment extends Fragment implements SteamNewsViewModel.OnGetNe
     public void onGetNewsResult(ArrayList<NewsTileModel> result) {
         activityIndicatiorContainer.setVisibility(View.INVISIBLE);
         recyclerView.setRefreshing(false);
-        if(result == null) {
+        if (result == null) {
             StyleableToast toast = new StyleableToast
                     .Builder(getActivity())
                     .text("Too much request to Steam API. Please wait a while (Usually 10 minutes) and try again!")
@@ -111,5 +124,9 @@ public class NewsFragment extends Fragment implements SteamNewsViewModel.OnGetNe
 
     public void setAllNewsQuery(ArrayList<NewsQueryModel> allNewsQuery) {
         this.allNewsQuery = allNewsQuery;
+    }
+
+    public void setMode(int mode) {
+        this.mode = mode;
     }
 }
