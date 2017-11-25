@@ -1,8 +1,11 @@
 package com.a58070096.patcharaponjoksamut.steamstalker.Fragment;
 
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +17,7 @@ import com.a58070096.patcharaponjoksamut.steamstalker.ViewModel.GameDetailInfoVi
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -66,11 +70,23 @@ public class GameDetailInfoFragment extends Fragment {
 
     public void prepareUIData() {
         nameTextView.setText(gameDetailInfoViewModel.getGameName());
-        descriptionTextView.setText(gameDetailInfoViewModel.getGameDescrition());
+        descriptionTextView.setText(Html.fromHtml(gameDetailInfoViewModel.getGameDescrition()));
         developerTextView.setText(gameDetailInfoViewModel.getGameDeveloper());
         publisherTextView.setText(gameDetailInfoViewModel.getGamePublisher());
-        websiteTextView.setText(gameDetailInfoViewModel.getGameWebsite());
+        if(!gameDetailInfoViewModel.getGameWebsite().equals("N/A")) {
+            websiteTextView.setText(Html.fromHtml("<u>"+gameDetailInfoViewModel.getGameWebsite()+"</u>"));
+        } else {
+            websiteTextView.setText("N?A");
+        }
         supportTextView.setText(gameDetailInfoViewModel.getSupportedOperatingSystem());
         priceTextView.setText(gameDetailInfoViewModel.getGamePrice());
+    }
+
+    @OnClick(R.id.game_detail_info_website)
+    public void onGameDetailWebsiteClicked() {
+        if(!gameDetailInfoViewModel.getGameWebsite().equals("N/A")) {
+            Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(gameDetailInfoViewModel.getGameWebsite()));
+            startActivity(myIntent);
+        }
     }
 }

@@ -22,9 +22,7 @@ public class GameDetailInfoViewModel {
         if(game.getDescription().equals("null") || game.getDescription().isEmpty()) {
             return "N/A";
         }
-
-        String noHTMLString = game.getDescription().replaceAll("\\<.*?>","");
-        return noHTMLString;
+        return game.getDescription();
     }
 
     public String getGameDeveloper() {
