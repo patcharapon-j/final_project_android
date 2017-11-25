@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +30,7 @@ public class NewsTileAdapter extends UltimateViewAdapter<NewsTileAdapter.MyViewH
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        holder.body.setText(allNews.get(position).getBody());
+        holder.body.setText(Html.fromHtml(allNews.get(position).getBody()));
         holder.title.setText(allNews.get(position).getTitle());
         holder.name.setText(allNews.get(position).getName());
         holder.date.setText(allNews.get(position).getDateString());

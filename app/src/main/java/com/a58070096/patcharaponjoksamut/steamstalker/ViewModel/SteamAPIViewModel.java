@@ -148,7 +148,7 @@ public class SteamAPIViewModel {
                                     Collections.sort(allGame, new Comparator<GameTileModel>() {
                                         @Override
                                         public int compare(GameTileModel gameTileModel, GameTileModel t1) {
-                                            return gameTileModel.getRank() - t1.getRank();
+                                            return gameTileModel.getName().compareTo(t1.getName());
                                         }
                                     });
                                     listener.searchGameResponse(allGame);

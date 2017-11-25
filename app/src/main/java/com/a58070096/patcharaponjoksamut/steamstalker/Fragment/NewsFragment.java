@@ -18,6 +18,7 @@ import com.a58070096.patcharaponjoksamut.steamstalker.Adapter.NewsTileAdapter;
 import com.a58070096.patcharaponjoksamut.steamstalker.Model.NewsQueryModel;
 import com.a58070096.patcharaponjoksamut.steamstalker.Model.NewsTileModel;
 import com.a58070096.patcharaponjoksamut.steamstalker.R;
+import com.a58070096.patcharaponjoksamut.steamstalker.ViewModel.ProfileGameViewModel;
 import com.a58070096.patcharaponjoksamut.steamstalker.ViewModel.SteamNewsViewModel;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
@@ -31,7 +32,7 @@ import butterknife.ButterKnife;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class NewsFragment extends Fragment implements SteamNewsViewModel.OnGetNewsForAppResponse {
+public class NewsFragment extends Fragment implements SteamNewsViewModel.OnGetNewsForAppResponse, ProfileGameViewModel.ProfileGameListener {
 
     @BindView(R.id.ultimate_recycler_view)
     UltimateRecyclerView recyclerView;
@@ -45,6 +46,7 @@ public class NewsFragment extends Fragment implements SteamNewsViewModel.OnGetNe
     private NewsTileAdapter adapter;
     private SteamNewsViewModel steamNewsViewModel;
     private ArrayList<NewsQueryModel> allNewsQuery = new ArrayList<>();
+    private ProfileGameViewModel profileGameViewModel;
 
     private int mode = 0;
 
@@ -86,7 +88,7 @@ public class NewsFragment extends Fragment implements SteamNewsViewModel.OnGetNe
         recyclerView.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getNewsFor(allNewsQuery);
+                profileGameViewModel.getFollowedGame();
             }
         });
     }
@@ -101,6 +103,9 @@ public class NewsFragment extends Fragment implements SteamNewsViewModel.OnGetNe
     private void setupViewModel() {
         steamNewsViewModel = new SteamNewsViewModel();
         steamNewsViewModel.setListener(this);
+        profileGameViewModel = ProfileGameViewModel.getInstance();
+        profileGameViewModel.setListener(this);
+        profileGameViewModel.getFollowedGame();
     }
 
     @Override
@@ -128,5 +133,10 @@ public class NewsFragment extends Fragment implements SteamNewsViewModel.OnGetNe
 
     public void setMode(int mode) {
         this.mode = mode;
+    }
+
+    @Override
+    public void onFollowedGameResponse(ArrayList<NewsQueryModel> allFollowedGame) {
+        getNewsFor(allFollowedGame);
     }
 }
