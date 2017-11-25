@@ -144,10 +144,6 @@ public class HomeActivity extends AppCompatActivity implements ProfileFragment.P
 
     public void showGameDetail(String appId) {
         this.activityIndicatorContainer.setVisibility(View.VISIBLE);
-        StyleableToast toast = new StyleableToast
-                .Builder(this)
-                .text("Load Data for " + appId)
-                .build();
         steamAPIViewModel.getGameDetails(appId);
 
     }
