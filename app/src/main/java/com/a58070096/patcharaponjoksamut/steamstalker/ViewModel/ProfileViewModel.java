@@ -19,6 +19,8 @@ import com.google.firebase.database.ValueEventListener;
 
 public class ProfileViewModel{
 
+    private FirebaseUser currentUser;
+
     public ProfileViewModel() {
     }
 
@@ -28,7 +30,6 @@ public class ProfileViewModel{
     }
 
     public String getDisplayName() {
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if(currentUser != null) {
             return  currentUser.getDisplayName();
         } else {
@@ -37,7 +38,6 @@ public class ProfileViewModel{
     }
 
     public String getEmail() {
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if(currentUser != null) {
             return  currentUser.getEmail();
         } else {
@@ -46,7 +46,6 @@ public class ProfileViewModel{
     }
 
     public Uri getProfileImage() {
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if(currentUser != null) {
             return  currentUser.getPhotoUrl();
         } else {
@@ -54,4 +53,7 @@ public class ProfileViewModel{
         }
     }
 
+    public void setCurrentUser(FirebaseUser currentUser) {
+        this.currentUser = currentUser;
+    }
 }

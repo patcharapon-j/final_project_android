@@ -152,6 +152,7 @@ public class SteamAPIViewModel {
                                         }
                                     });
                                     listener.searchGameResponse(allGame);
+                                    return;
                                 }
 
                             } catch (JSONException e) {
@@ -167,7 +168,8 @@ public class SteamAPIViewModel {
                             }
                             Log.v("Debug", String.valueOf(anError.getErrorCode()));
                             Log.d("Debug", anError.getMessage());
-                            //listener.searchGameResponse(new ArrayList<GameTileModel>());
+                            listener.searchGameResponse(new ArrayList<GameTileModel>());
+                            return;
                         }
                     });
         }

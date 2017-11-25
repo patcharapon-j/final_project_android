@@ -77,12 +77,18 @@ public class ProfileFragment extends Fragment implements SteamAPIViewModel.SteaA
 
     @Override
     public void onFollowedGameResponse(ArrayList<NewsQueryModel> allFollowedGame) {
-        ArrayList<String> allGameString = new ArrayList<>();
-        for(NewsQueryModel game: allFollowedGame) {
-            allGameString.add(game.getAppId());
+        if(allFollowedGame.size() == 0) {
+            recyclerView.setRefreshing(false);
+            adapter.setGameList(new ArrayList<GameTileModel>());
+            adapter.notifyDataSetChanged();
+            recyclerView.showEmptyView();
+        } else {
+            ArrayList<String> allGameString = new ArrayList<>();
+            for(NewsQueryModel game: allFollowedGame) {
+                allGameString.add(game.getAppId());
+            }
+            steamViewModel.getTileForGame(allGameString);
         }
-
-        steamViewModel.getTileForGame(allGameString);
     }
 
     public interface ProfileFragmentListener {
@@ -166,5 +172,15 @@ public class ProfileFragment extends Fragment implements SteamAPIViewModel.SteaA
         displayNameTextView.setText(profileViewModel.getDisplayName());
         emailTextView.setText(profileViewModel.getEmail());
         Glide.with(this).load(profileViewModel.getProfileImage()).into(imageView);
+    }
+
+    public ProfileViewModel getProfileViewModel() {
+        return profileViewModel;
+    }
+
+    public void reloadUserData() {
+        displayUserInfo();
+        profileGameViewModel.getFollowedGame();
+
     }
 }

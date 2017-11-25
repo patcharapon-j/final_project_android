@@ -124,6 +124,7 @@ public class NewsFragment extends Fragment implements SteamNewsViewModel.OnGetNe
         } else {
             adapter.setAllNews(result);
             adapter.notifyDataSetChanged();
+            recyclerView.hideEmptyView();
         }
     }
 
@@ -137,6 +138,13 @@ public class NewsFragment extends Fragment implements SteamNewsViewModel.OnGetNe
 
     @Override
     public void onFollowedGameResponse(ArrayList<NewsQueryModel> allFollowedGame) {
-        getNewsFor(allFollowedGame);
+        if(allFollowedGame.size() == 0) {
+            recyclerView.setRefreshing(false);
+            adapter.setAllNews(new ArrayList<NewsTileModel>());
+            adapter.notifyDataSetChanged();
+            recyclerView.showEmptyView();
+        } else {
+            getNewsFor(allFollowedGame);
+        }
     }
 }

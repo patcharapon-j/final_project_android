@@ -31,7 +31,7 @@ public class ProfileGameViewModel implements ValueEventListener {
 
     @Override
     public void onDataChange(DataSnapshot dataSnapshot) {
-        if(dataSnapshot != null) {
+        if(dataSnapshot != null && dataSnapshot.getValue() != null) {
             Log.v("Debug", "Recived Snapshot" + dataSnapshot.toString());
             allFollowedGame = new ArrayList<>();
             for(DataSnapshot game: dataSnapshot.getChildren()) {
@@ -44,6 +44,7 @@ public class ProfileGameViewModel implements ValueEventListener {
             getFollowedGame();
         } else {
             allFollowedGame = new ArrayList<>();
+            getFollowedGame();
         }
     }
 
@@ -61,8 +62,10 @@ public class ProfileGameViewModel implements ValueEventListener {
     public ProfileGameViewModel() {
         database = FirebaseDatabase.getInstance();
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference myRef = database.getReference("users/" + currentUser.getUid() +"/followedGame");
-        myRef.addValueEventListener(this);
+        if(currentUser != null) {
+            DatabaseReference myRef = database.getReference("users/" + currentUser.getUid() +"/followedGame");
+            myRef.addValueEventListener(this);
+        }
     }
 
     private ArrayList<ProfileGameListener> listeners = new ArrayList<>();

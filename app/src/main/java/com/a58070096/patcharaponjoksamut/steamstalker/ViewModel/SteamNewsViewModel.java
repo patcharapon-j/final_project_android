@@ -62,7 +62,7 @@ public class SteamNewsViewModel {
                                 }
                             } catch (JSONException e) {
                                 Log.v("Debug", e.toString());
-                                listener.onGetNewsResult(null);
+                                listener.onGetNewsResult(new ArrayList<NewsTileModel>());
                                 return;
                             }
 
@@ -75,6 +75,7 @@ public class SteamNewsViewModel {
                                     }
                                 });
                                 listener.onGetNewsResult(result);
+                                return;
                             }
 
                         }
@@ -82,7 +83,7 @@ public class SteamNewsViewModel {
                         @Override
                         public void onError(ANError anError) {
                             Log.v("Debug", anError.getErrorCode() + "");
-                            listener.onGetNewsResult(null);
+                            listener.onGetNewsResult(new ArrayList<NewsTileModel>());
                             return;
                         }
                     });
