@@ -92,6 +92,7 @@ public class SteamAPIViewModel {
                                         public void onError(ANError anError) {
                                             if(anError.getErrorCode() == 403 || anError.getErrorCode() == 429) {
                                                 listener.onSteamAccessDenied();
+                                                return;
                                             }
                                             Log.v("Debug", String.valueOf(anError.getErrorCode()));
                                             Log.d("Debug", anError.getMessage());
@@ -106,6 +107,7 @@ public class SteamAPIViewModel {
                     public void onError(ANError anError) {
                         if(anError.getErrorCode() == 403 || anError.getErrorCode() == 429) {
                             listener.onSteamAccessDenied();
+                            return;
                         }
                         Log.v("Debug", String.valueOf(anError.getErrorCode()));
                         Log.d("Debug", anError.getMessage());
@@ -161,6 +163,7 @@ public class SteamAPIViewModel {
                         public void onError(ANError anError) {
                             if(anError.getErrorCode() == 403 || anError.getErrorCode() == 429) {
                                 listener.onSteamAccessDenied();
+                                return;
                             }
                             Log.v("Debug", String.valueOf(anError.getErrorCode()));
                             Log.d("Debug", anError.getMessage());
@@ -218,6 +221,7 @@ public class SteamAPIViewModel {
                         if(anError.getErrorCode() == 403 || anError.getErrorCode() == 429) {
                             Log.v("Debugs2", "Steam Block");
                             listener.onSteamAccessDenied();
+                            return;
                         }
                         Log.v("Debugs2", String.valueOf(anError.getErrorCode()));
                         Log.v("Debugs2", anError.getMessage());
@@ -259,6 +263,7 @@ public class SteamAPIViewModel {
                     public void onError(ANError anError) {
                         if(anError.getErrorCode() == 403 || anError.getErrorCode() == 429) {
                             listener.onSteamAccessDenied();
+                            return;
                         }
                         Log.v("Debugs4", String.valueOf(anError.getErrorCode()));
                         Log.v("Debugs4", anError.getMessage());
