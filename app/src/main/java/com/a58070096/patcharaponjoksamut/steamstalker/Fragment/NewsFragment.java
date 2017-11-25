@@ -56,17 +56,6 @@ public class NewsFragment extends Fragment implements SteamNewsViewModel.OnGetNe
         setupRecyclerView(view);
         setupViewModel();
 
-        NewsQueryModel queryModel = new NewsQueryModel();
-        queryModel.setAppId("440");
-        queryModel.setAppName("Test1");
-
-        NewsQueryModel queryModel2 = new NewsQueryModel();
-        queryModel2.setAppId("420");
-        queryModel2.setAppName("test2");
-
-        allNewsQuery.add(queryModel);
-        allNewsQuery.add(queryModel2);
-
         getNewsFor(allNewsQuery);
 
         return view;

@@ -2,6 +2,7 @@ package com.a58070096.patcharaponjoksamut.steamstalker.Model;
 
 import android.net.Uri;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -54,5 +55,10 @@ public class NewsTileModel {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDateString() {
+        String newstring = new SimpleDateFormat("yyyy-MM-dd").format(date);
+        return newstring;
     }
 }

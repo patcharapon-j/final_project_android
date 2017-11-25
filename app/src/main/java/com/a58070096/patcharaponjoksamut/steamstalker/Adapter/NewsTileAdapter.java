@@ -32,7 +32,7 @@ public class NewsTileAdapter extends UltimateViewAdapter<NewsTileAdapter.MyViewH
         holder.body.setText(allNews.get(position).getBody());
         holder.title.setText(allNews.get(position).getTitle());
         holder.name.setText(allNews.get(position).getName());
-        holder.date.setText(allNews.get(position).getDate().toString());
+        holder.date.setText(allNews.get(position).getDateString());
         holder.link = Uri.parse(allNews.get(position).getUrl());
     }
 

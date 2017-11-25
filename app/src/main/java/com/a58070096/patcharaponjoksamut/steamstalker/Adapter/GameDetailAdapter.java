@@ -7,8 +7,12 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.a58070096.patcharaponjoksamut.steamstalker.Fragment.GameDetailInfoFragment;
 import com.a58070096.patcharaponjoksamut.steamstalker.Fragment.GameDetailStatsFragment;
+import com.a58070096.patcharaponjoksamut.steamstalker.Fragment.NewsFragment;
 import com.a58070096.patcharaponjoksamut.steamstalker.Model.GameModel;
+import com.a58070096.patcharaponjoksamut.steamstalker.Model.NewsQueryModel;
 import com.a58070096.patcharaponjoksamut.steamstalker.ViewModel.GameDetailStatsViewModel;
+
+import java.util.ArrayList;
 
 /**
  * Created by patcharaponjoksamut on 24/11/2017 AD.
@@ -16,7 +20,7 @@ import com.a58070096.patcharaponjoksamut.steamstalker.ViewModel.GameDetailStatsV
 
 public class GameDetailAdapter extends FragmentPagerAdapter {
 
-    private final int ROW = 2;
+    private final int ROW = 3;
     private GameModel game;
 
     public GameDetailAdapter(FragmentManager fm) {
@@ -34,6 +38,15 @@ public class GameDetailAdapter extends FragmentPagerAdapter {
                 GameDetailStatsFragment gameDetailStatsFragment = new GameDetailStatsFragment();
                 gameDetailStatsFragment.setGame(game);
                 return gameDetailStatsFragment;
+            case 2:
+                NewsFragment newsFragment = new NewsFragment();
+                ArrayList<NewsQueryModel> query = new ArrayList<>();
+                NewsQueryModel model = new NewsQueryModel();
+                model.setAppName(game.getName());
+                model.setAppId(game.getAppId());
+                query.add(model);
+                newsFragment.setAllNewsQuery(query);
+                return newsFragment;
 
         }
 
@@ -53,6 +66,8 @@ public class GameDetailAdapter extends FragmentPagerAdapter {
                 return "Info";
             case 1:
                 return "Stats";
+            case 2:
+                return "News";
         }
         return null;
     }
