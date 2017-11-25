@@ -148,10 +148,11 @@ public class SteamAPIViewModel {
                                     Collections.sort(allGame, new Comparator<GameTileModel>() {
                                         @Override
                                         public int compare(GameTileModel gameTileModel, GameTileModel t1) {
-                                            return gameTileModel.getRank() - t1.getRank();
+                                            return gameTileModel.getName().compareTo(t1.getName());
                                         }
                                     });
                                     listener.searchGameResponse(allGame);
+                                    return;
                                 }
 
                             } catch (JSONException e) {
@@ -167,7 +168,8 @@ public class SteamAPIViewModel {
                             }
                             Log.v("Debug", String.valueOf(anError.getErrorCode()));
                             Log.d("Debug", anError.getMessage());
-                            //listener.searchGameResponse(new ArrayList<GameTileModel>());
+                            listener.searchGameResponse(new ArrayList<GameTileModel>());
+                            return;
                         }
                     });
         }

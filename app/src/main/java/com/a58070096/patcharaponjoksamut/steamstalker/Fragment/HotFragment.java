@@ -102,6 +102,13 @@ public class HotFragment extends Fragment implements SteamAPIViewModel.SteaAPIVI
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
+        recyclerView.setDefaultOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                activityIndicatiorContainer.setVisibility(View.VISIBLE);
+                steamViewModel.getTop100Game();
+            }
+        });
 
     }
 

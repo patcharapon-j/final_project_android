@@ -51,7 +51,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="16dp"
-                        android:text="SteamSpy Rank"
+                        android:text="SteamSpy Score"
                         android:textSize="14sp" />
 
                     <TextView
@@ -60,7 +60,7 @@
                         android:layout_height="wrap_content"
                         android:autoText="false"
                         android:paddingLeft="16dp"
-                        android:text="Steam Sp Rank"
+                        android:text="Steam Score"
                         android:textColor="#000000"
                         android:textSize="18sp" />
                 </LinearLayout>
@@ -206,7 +206,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="16dp"
-                        android:text="Rating"
+                        android:text="Likes"
                         android:textColor="#000000"
                         android:textSize="18sp" />
                 </LinearLayout>

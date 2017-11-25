@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.a58070096.patcharaponjoksamut.steamstalker.Fragment.GameFragment;
+import com.a58070096.patcharaponjoksamut.steamstalker.Fragment.HotFragment;
 import com.a58070096.patcharaponjoksamut.steamstalker.Fragment.NewsFragment;
 import com.a58070096.patcharaponjoksamut.steamstalker.Fragment.ProfileFragment;
 import com.a58070096.patcharaponjoksamut.steamstalker.Model.GameModel;
@@ -30,6 +31,7 @@ import org.parceler.Parcels;
 
 import java.util.ArrayList;
 
+import butterknife.BindInt;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -78,6 +80,10 @@ public class HomeActivity extends AppCompatActivity implements ProfileFragment.P
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(user == null) {
             this.showWelcomeActivity();
+        } else {
+            ProfileFragment profileFragment = (ProfileFragment) getSupportFragmentManager().findFragmentById(R.id.profile_fragment);
+            profileFragment.getProfileViewModel().setCurrentUser(user);
+            profileFragment.reloadUserData();
         }
     }
 
@@ -190,5 +196,11 @@ public class HomeActivity extends AppCompatActivity implements ProfileFragment.P
         toast.show();
 
         activityIndicatorContainer.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        checkForLogin();
     }
 }
