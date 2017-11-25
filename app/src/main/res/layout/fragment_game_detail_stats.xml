@@ -51,7 +51,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="16dp"
-                        android:text="SteamSpy Score"
+                        android:text="SteamSpy Score Rank"
                         android:textSize="14sp" />
 
                     <TextView
