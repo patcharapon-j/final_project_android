@@ -20,6 +20,11 @@ import java.util.ArrayList;
 
 public class ProfileGameViewModel implements ValueEventListener {
 
+    public interface ProfileGameViewModelFollowListener {
+        void onFollowResult();
+    }
+
+    private ProfileGameViewModelFollowListener followListener;
 
     private static ProfileGameViewModel instance = new ProfileGameViewModel();
 
@@ -28,6 +33,7 @@ public class ProfileGameViewModel implements ValueEventListener {
     }
 
     ArrayList<NewsQueryModel> allFollowedGame = new ArrayList<>();
+    ArrayList<String> allLikedGame = new ArrayList<>();
 
     @Override
     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -65,6 +71,31 @@ public class ProfileGameViewModel implements ValueEventListener {
         if(currentUser != null) {
             DatabaseReference myRef = database.getReference("users/" + currentUser.getUid() +"/followedGame");
             myRef.addValueEventListener(this);
+            DatabaseReference myRef2 = database.getReference("users/" + currentUser.getUid() + "/likeGame");
+            myRef2.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if(dataSnapshot != null && dataSnapshot.getValue() != null) {
+                        Log.v("Debug", "Recived Snapshot" + dataSnapshot.toString());
+                        allLikedGame = new ArrayList<>();
+                        for(DataSnapshot game: dataSnapshot.getChildren()) {
+                            allLikedGame.add(game.getKey());
+                        }
+                        Log.v("Debug", "Result" + allLikedGame.size());
+                    } else {
+                        allLikedGame = new ArrayList<>();
+                    }
+
+                    if(followListener != null) {
+                        followListener.onFollowResult();
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
         }
     }
 
@@ -100,23 +131,26 @@ public class ProfileGameViewModel implements ValueEventListener {
 
     public void likeGame(GameModel game) {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference ref = database.getReference("games/" + game.getAppId() + "/like/" + currentUser.getUid());
-        ref.setValue(currentUser.getUid());
+        DatabaseReference ref = database.getReference("users/" + currentUser.getUid() + "/likeGame/"+game.getAppId());
+        ref.setValue(game.getAppId());
     }
 
     public void unlikeGame(GameModel game) {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference ref = database.getReference("games/" + game.getAppId() + "/like/" + currentUser.getUid());
+        DatabaseReference ref = database.getReference("users/" + currentUser.getUid() + "/likeGame/"+game.getAppId());
         ref.removeValue();
     }
 
     public boolean isUserLikeGame(GameModel game) {
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference ref = database.getReference("games/" + game.getAppId() + "/like/" + currentUser.getUid());
-        if(ref == null) {
-            return false;
-        } else {
-            return true;
+        for(String id: allLikedGame) {
+            if(game.getAppId().equals(id)) {
+                return true;
+            }
         }
+        return false;
+    }
+
+    public void setFollowListener(ProfileGameViewModelFollowListener followListener) {
+        this.followListener = followListener;
     }
 }

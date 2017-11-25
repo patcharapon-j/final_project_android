@@ -94,4 +94,11 @@ public class GameDetailInfoFragment extends Fragment {
             startActivity(myIntent);
         }
     }
+
+    @OnClick(R.id.game_detail_info_goto)
+    public void onGameGotoSteamClicked() {
+        Uri uri = Uri.parse("http://store.steampowered.com/app/" + game.getAppId());
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(intent);
+    }
 }

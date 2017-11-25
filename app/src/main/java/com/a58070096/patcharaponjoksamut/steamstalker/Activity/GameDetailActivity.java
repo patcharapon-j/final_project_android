@@ -31,7 +31,7 @@ import butterknife.OnClick;
 import cn.hugeterry.coordinatortablayout.CoordinatorTabLayout;
 import cn.hugeterry.coordinatortablayout.listener.LoadHeaderImagesListener;
 
-public class GameDetailActivity extends AppCompatActivity implements ProfileGameViewModel.ProfileGameListener{
+public class GameDetailActivity extends AppCompatActivity implements ProfileGameViewModel.ProfileGameListener, ProfileGameViewModel.ProfileGameViewModelFollowListener{
 
     @BindView(R.id.coordinatortablayout)
     CoordinatorTabLayout coordinatorTabLayout;
@@ -57,6 +57,7 @@ public class GameDetailActivity extends AppCompatActivity implements ProfileGame
         ButterKnife.bind(this);
 
         viewModel.setListener(this);
+        viewModel.setFollowListener(this);
 
         unpackGameExtra();
         setupCoordinatorLayout();
@@ -123,7 +124,29 @@ public class GameDetailActivity extends AppCompatActivity implements ProfileGame
 
     @OnClick(R.id.game_detail_like_button)
     public void onLikeButtonClicked() {
+        if(viewModel.isUserLikeGame(game)) {
+            viewModel.unlikeGame(game);
+            StyleableToast toast = new StyleableToast
+                    .Builder(this)
+                    .text("UnLiked " + game.getName())
+                    .textColor(Color.WHITE)
+                    .backgroundColor(getResources().getColor(R.color.colorPrimary))
+                    .build();
 
+            toast.show();
+        } else {
+            viewModel.likeGame(game);
+            StyleableToast toast = new StyleableToast
+                    .Builder(this)
+                    .text("Liked " + game.getName())
+                    .textColor(Color.WHITE)
+                    .backgroundColor(getResources().getColor(R.color.colorPrimary))
+                    .build();
+
+            toast.show();
+        }
+
+        setupFloatingButton();
     }
 
     @OnClick(R.id.game_detail_follow_button)
@@ -161,5 +184,10 @@ public class GameDetailActivity extends AppCompatActivity implements ProfileGame
         sendIntent.putExtra(Intent.EXTRA_TEXT, "http://store.steampowered.com/app/" + game.getAppId());
         sendIntent.setType("text/plain");
         startActivity(sendIntent);
+    }
+
+    @Override
+    public void onFollowResult() {
+        setupFloatingButton();
     }
 }
