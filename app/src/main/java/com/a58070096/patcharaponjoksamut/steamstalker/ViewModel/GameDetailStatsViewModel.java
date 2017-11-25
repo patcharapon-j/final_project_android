@@ -15,7 +15,11 @@ public class GameDetailStatsViewModel {
     }
 
     public String getGameRank() {
-        return String.valueOf(game.getRank());
+        if(game.getRank() == -1) {
+            return "N/A";
+        } else {
+            return String.valueOf(game.getRank()) + "%";
+        }
     }
 
     public String getGameMetacritic() {
