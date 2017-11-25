@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "371606340289",
+    "firebase_url": "https://finalprojectandroid-e2c36.firebaseio.com",
+    "project_id": "finalprojectandroid-e2c36",
+    "storage_bucket": "finalprojectandroid-e2c36.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:371606340289:android:fb25a6a926487c62",
+        "android_client_info": {
+          "package_name": "com.a58070096.patcharaponjoksamut.steamstalker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "371606340289-0e50om2qbomumiorgo8cei255g926rkc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.a58070096.patcharaponjoksamut.steamstalker",
+            "certificate_hash": "ce2ba8fdea35f996641798e85262047685e9fe74"
+          }
+        },
+        {
+          "client_id": "371606340289-bmd2af66jotn4ojdb788m4b4dok4qt6f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLjJZeQ-AbGz7UItYXewbCz2EuMDPOGJQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "371606340289-bmd2af66jotn4ojdb788m4b4dok4qt6f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
