@@ -27,11 +27,11 @@ public class GameDetailStatsViewModel {
     }
 
     public String getGamePlayer() {
-        return String.format("%,8d%n", game.getPlayerIn2Weeks());
+        return String.format("%,d", game.getPlayerIn2Weeks());
     }
 
     public String getOwner() {
-        return String.format("%,8d%n", game.getOwners());
+        return String.format("%,d", game.getOwners());
     }
 
     public String getRating() {
