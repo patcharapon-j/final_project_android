@@ -1,6 +1,9 @@
 package com.a58070096.patcharaponjoksamut.steamstalker.Activity;
 
+import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -98,6 +101,12 @@ public class GameDetailActivity extends AppCompatActivity implements ProfileGame
         } else {
             followButton.setImageResource(R.drawable.ic_star_border_black_24dp);
         }
+
+        if(viewModel.isUserLikeGame(game)) {
+            likeButton.setImageTintList(getResources().getColorStateList(R.color.white));
+        } else {
+            likeButton.setImageTintList(getResources().getColorStateList(R.color.dark));
+        }
     }
 
     private boolean isFollowedGame(String appId, ArrayList<NewsQueryModel> allFollowedGame) {
@@ -143,5 +152,14 @@ public class GameDetailActivity extends AppCompatActivity implements ProfileGame
         }
 
         setupFloatingButton();
+    }
+
+    @OnClick(R.id.game_detail_share_button)
+    public void onShareButtonClicked() {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, "http://store.steampowered.com/app/" + game.getAppId());
+        sendIntent.setType("text/plain");
+        startActivity(sendIntent);
     }
 }

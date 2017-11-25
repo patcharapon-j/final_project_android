@@ -94,4 +94,26 @@ public class ProfileGameViewModel implements ValueEventListener {
         DatabaseReference ref = database.getReference("users/" + currentUser.getUid() + "/followedGame/"+game.getAppId());
         ref.removeValue();
     }
+
+    public void likeGame(GameModel game) {
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference ref = database.getReference("games/" + game.getAppId() + "/like/" + currentUser.getUid());
+        ref.setValue(currentUser.getUid());
+    }
+
+    public void unlikeGame(GameModel game) {
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference ref = database.getReference("games/" + game.getAppId() + "/like/" + currentUser.getUid());
+        ref.removeValue();
+    }
+
+    public boolean isUserLikeGame(GameModel game) {
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference ref = database.getReference("games/" + game.getAppId() + "/like/" + currentUser.getUid());
+        if(ref == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 }
