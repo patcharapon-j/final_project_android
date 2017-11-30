@@ -20,11 +20,27 @@ public class GameDetailInfoViewModelTest {
     }
 
     @Test
+    public void gameDetailWebsiteNormalTest() throws Exception {
+        GameModel gameModel = new GameModel();
+        gameModel.setWebsite("www.google.com");
+        GameDetailInfoViewModel viewModel = new GameDetailInfoViewModel(gameModel);
+        assertEquals("www.google.com", viewModel.getGameWebsite());
+    }
+
+    @Test
     public void gameDetailDeveloperNullTest() throws Exception {
         GameModel gameModel = new GameModel();
         gameModel.setDeveloper("null");
         GameDetailInfoViewModel viewModel = new GameDetailInfoViewModel(gameModel);
         assertEquals("N/A", viewModel.getGameDeveloper());
+    }
+
+    @Test
+    public void gameDetailDeveloperNormalTest() throws Exception {
+        GameModel gameModel = new GameModel();
+        gameModel.setDeveloper("Me");
+        GameDetailInfoViewModel viewModel = new GameDetailInfoViewModel(gameModel);
+        assertEquals("Me", viewModel.getGameDeveloper());
     }
 
     @Test
@@ -36,11 +52,27 @@ public class GameDetailInfoViewModelTest {
     }
 
     @Test
+    public void gameDetailPublisherNormalTest() throws Exception {
+        GameModel gameModel = new GameModel();
+        gameModel.setPublisher("Valve");
+        GameDetailInfoViewModel viewModel = new GameDetailInfoViewModel(gameModel);
+        assertEquals("Valve", viewModel.getGamePublisher());
+    }
+
+    @Test
     public void gameDetailDescriptionNullTest() throws Exception {
         GameModel gameModel = new GameModel();
         gameModel.setDescription("null");
         GameDetailInfoViewModel viewModel = new GameDetailInfoViewModel(gameModel);
         assertEquals("N/A", viewModel.getGameDescrition());
+    }
+
+    @Test
+    public void gameDetailDescriptionNormalTest() throws Exception {
+        GameModel gameModel = new GameModel();
+        gameModel.setDescription("Description");
+        GameDetailInfoViewModel viewModel = new GameDetailInfoViewModel(gameModel);
+        assertEquals("Description", viewModel.getGameDescrition());
     }
 
     @Test
@@ -94,5 +126,25 @@ public class GameDetailInfoViewModelTest {
         GameDetailInfoViewModel viewModel = new GameDetailInfoViewModel(gameModel);
         assertEquals("Windows Mac", viewModel.getSupportedOperatingSystem());
     }
+
+    @Test
+    public void gameDetailSupportedPlatformAllTest() throws Exception {
+        GameModel gameModel = new GameModel();
+        gameModel.setSupportWindows(true);
+        gameModel.setSupportMacos(true);
+        gameModel.setSupportLinux(true);
+        GameDetailInfoViewModel viewModel = new GameDetailInfoViewModel(gameModel);
+        assertEquals("Windows Linux Mac", viewModel.getSupportedOperatingSystem());
+    }
+
+
+    @Test
+    public void gameDetailDateComingSoon() throws Exception {
+        GameModel gameModel = new GameModel();
+        gameModel.setComingSoon(true);
+        GameDetailInfoViewModel viewModel = new GameDetailInfoViewModel(gameModel);
+        assertEquals("Coming Soon", viewModel.getGameDate());
+    }
+
 
 }
