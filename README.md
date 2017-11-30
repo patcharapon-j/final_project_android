@@ -1003,6 +1003,8 @@ https://play.google.com/store/apps/details?id=com.a58070096.patcharaponjoksamut.
 
 # Test Summary
 
+<img src="https://github.com/patcharapon-j/final_project_android/blob/master/Screenshot/Screen Shot 2560-12-01 at 02.14.04.png" width="300">
+
 ## Unit Test
 
 ### gameDetailWebsiteNullTest
