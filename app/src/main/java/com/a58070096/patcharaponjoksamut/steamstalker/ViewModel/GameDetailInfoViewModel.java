@@ -48,7 +48,7 @@ public class GameDetailInfoViewModel {
     }
 
     public String getGameWebsite() {
-        if(game.getWebsite().equals("null")) {
+        if(game.getWebsite().equals("null") || game.getWebsite() == null) {
             return "N/A";
         }
         return game.getWebsite();
