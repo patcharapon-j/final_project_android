@@ -991,7 +991,13 @@ AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken())
 
 # APK File
 
-https://drive.google.com/open?id=1xYLud2Pyp-KdopaYTQ2A0ezQi2FOdnuq
+https://drive.google.com/open?id=1_CFnbbVuNorYpHyLKmczSXNBdiFY7uqT
+
+
+
+# Google Playstore
+
+*Uploading*
 
 
 
