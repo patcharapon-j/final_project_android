@@ -14,6 +14,7 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginBehavior;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.muddzdev.styleabletoastlibrary.StyleableToast;
@@ -113,7 +114,9 @@ public class WelcomeActivity extends AppCompatActivity implements Authentication
     @Override
     public void onAuthenticationSuccessful() {
         hideActivityIndicator();
-        this.finish();
+        Intent intent = new Intent(this, HomeActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // Removes other Activities from stack
+        startActivity(intent);
     }
 
     @Override
@@ -137,5 +140,10 @@ public class WelcomeActivity extends AppCompatActivity implements Authentication
         a.addCategory(Intent.CATEGORY_HOME);
         a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(a);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 }

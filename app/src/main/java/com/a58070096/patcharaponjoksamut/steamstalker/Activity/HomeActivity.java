@@ -84,6 +84,9 @@ public class HomeActivity extends AppCompatActivity implements ProfileFragment.P
             ProfileFragment profileFragment = (ProfileFragment) getSupportFragmentManager().findFragmentById(R.id.profile_fragment);
             profileFragment.getProfileViewModel().setCurrentUser(user);
             profileFragment.reloadUserData();
+
+            NewsFragment newsFragment = (NewsFragment) getSupportFragmentManager().findFragmentById(R.id.news_fragment);
+            newsFragment.reloadUserData();
         }
     }
 

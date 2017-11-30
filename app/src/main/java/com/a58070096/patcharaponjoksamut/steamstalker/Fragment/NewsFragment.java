@@ -147,4 +147,11 @@ public class NewsFragment extends Fragment implements SteamNewsViewModel.OnGetNe
             getNewsFor(allFollowedGame);
         }
     }
+
+    public void reloadUserData() {
+        profileGameViewModel = ProfileGameViewModel.getInstance();
+        profileGameViewModel.reloadUserData();
+        profileGameViewModel.setListener(this);
+        profileGameViewModel.getFollowedGame();
+    }
 }

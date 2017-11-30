@@ -320,7 +320,6 @@
                     android:paddingTop="8dp">
 
                     <TextView
-                        android:id="@+id/game_detail_info_date"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="16dp"

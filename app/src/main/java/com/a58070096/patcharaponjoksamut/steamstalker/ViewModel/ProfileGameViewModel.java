@@ -66,6 +66,10 @@ public class ProfileGameViewModel implements ValueEventListener {
     private FirebaseDatabase database;
 
     public ProfileGameViewModel() {
+        reloadUserData();
+    }
+
+    public void reloadUserData() {
         database = FirebaseDatabase.getInstance();
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if(currentUser != null) {

@@ -47,7 +47,7 @@ public class GameDetailActivity extends AppCompatActivity implements ProfileGame
 
     private GameModel game;
 
-    ProfileGameViewModel viewModel = ProfileGameViewModel.getInstance();
+    ProfileGameViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +56,7 @@ public class GameDetailActivity extends AppCompatActivity implements ProfileGame
 
         ButterKnife.bind(this);
 
+        viewModel = ProfileGameViewModel.getInstance();
         viewModel.setListener(this);
         viewModel.setFollowListener(this);
 
