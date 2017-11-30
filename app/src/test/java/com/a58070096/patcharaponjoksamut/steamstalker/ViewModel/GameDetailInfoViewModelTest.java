@@ -60,11 +60,39 @@ public class GameDetailInfoViewModelTest {
     }
 
     @Test
+    public void gameDetailPriceCoversionFreeTest() throws Exception {
+        GameModel gameModel = new GameModel();
+        gameModel.setPrice(0);
+        GameDetailInfoViewModel viewModel = new GameDetailInfoViewModel(gameModel);
+        assertEquals("Free", viewModel.getGamePrice());
+    }
+
+    @Test
     public void gameDetailPriceCoversionLeadingZeroTest() throws Exception {
         GameModel gameModel = new GameModel();
         gameModel.setPrice(1009);
         GameDetailInfoViewModel viewModel = new GameDetailInfoViewModel(gameModel);
         assertEquals("10.09$", viewModel.getGamePrice());
+    }
+
+    @Test
+    public void gameDetailSupportedPlatformOneTest() throws Exception {
+        GameModel gameModel = new GameModel();
+        gameModel.setSupportWindows(true);
+        gameModel.setSupportMacos(false);
+        gameModel.setSupportLinux(false);
+        GameDetailInfoViewModel viewModel = new GameDetailInfoViewModel(gameModel);
+        assertEquals("Windows ", viewModel.getSupportedOperatingSystem());
+    }
+
+    @Test
+    public void gameDetailSupportedPlatformTwoTest() throws Exception {
+        GameModel gameModel = new GameModel();
+        gameModel.setSupportWindows(true);
+        gameModel.setSupportMacos(true);
+        gameModel.setSupportLinux(false);
+        GameDetailInfoViewModel viewModel = new GameDetailInfoViewModel(gameModel);
+        assertEquals("Windows Mac", viewModel.getSupportedOperatingSystem());
     }
 
 }
