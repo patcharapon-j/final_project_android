@@ -985,8 +985,12 @@ AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken())
 
 # Video Presentation
 
-*ส่งถายในวันที่ 4*
+https://www.youtube.com/watch?v=QeiLhtAU5js
 
+
+# Review
+
+https://www.youtube.com/watch?v=wyjUyavf1sE
 
 
 # APK File
@@ -1196,9 +1200,3 @@ https://play.google.com/store/apps/details?id=com.a58070096.patcharaponjoksamut.
 #### ผลลัพท์ที่ต้องการ
 
 "Coming Soon"
-
-
-
-# Review
-
-https://www.youtube.com/watch?v=wyjUyavf1sE
