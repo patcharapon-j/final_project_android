@@ -25,7 +25,6 @@
 
 - แอพพลิเคชั่นสามารถแชร์ Link เกมไปยังแอพอื่นได้
 
-  ​
 
 # Interface
 
@@ -1200,3 +1199,66 @@ https://play.google.com/store/apps/details?id=com.a58070096.patcharaponjoksamut.
 #### ผลลัพท์ที่ต้องการ
 
 "Coming Soon"
+
+
+
+## UI Test
+
+### homeActivityTestSelectNewsTabIsDisplayed
+
+#### เงื่อนไข
+
+ทำการคลิกที่ปุ่ม News ใน Bottom Navigation
+
+#### ผลลัพท์ที่ต้องการ
+
+แสดง News Fragment ขึ้นสู่หน้าจอ
+
+
+
+### homeActivityTestSelectGameTabIsDisplayed
+
+#### เงื่อนไข
+
+ทำการคลิกที่ปุ่ม Game ใน Bottom Navigation
+
+#### ผลลัพท์ที่ต้องการ
+
+แสดง Game Fragment ขึ้นสู่หน้าจอ
+
+
+
+### homeActivityTestSelectHotTabIsDisplayed
+
+#### เงื่อนไข
+
+ทำการคลิกที่ปุ่ม Hot ใน Bottom Navigation
+
+#### ผลลัพท์ที่ต้องการ
+
+แสดง Hot Fragment ขึ้นสู่หน้าจอ
+
+
+
+### homeActivityTestSelectProfileTabIsDisplayed
+
+#### เงื่อนไข
+
+ทำการคลิกที่ปุ่ม Profile ใน Bottom Navigation
+
+#### ผลลัพท์ที่ต้องการ
+
+แสดง Profile Fragment ขึ้นสู่หน้าจอ
+
+
+
+### logoutDialogTest
+
+#### เงื่อนไข
+
+ทำการคลิกที่ปุ่ม Logout ในหน้า Profile
+
+#### ผลลัพท์ที่ต้องการ
+
+แสดง Logout Dialog ที่มี String ว่า "Are you sure you want to Logout?"
+
