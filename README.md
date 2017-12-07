@@ -1008,6 +1008,8 @@ https://play.google.com/store/apps/details?id=com.a58070096.patcharaponjoksamut.
 
 <img src="https://github.com/patcharapon-j/final_project_android/blob/master/Screenshot/Screen Shot 2560-12-01 at 02.14.04.png" width="300">
 
+<img src="https://github.com/patcharapon-j/final_project_android/blob/master/Screenshot/Screen Shot 2560-12-08 at 01.43.23.png" width="300">
+
 ## Unit Test
 
 ### gameDetailWebsiteNullTest
@@ -1216,6 +1218,7 @@ https://play.google.com/store/apps/details?id=com.a58070096.patcharaponjoksamut.
 
 
 
+
 ### homeActivityTestSelectGameTabIsDisplayed
 
 #### เงื่อนไข
@@ -1225,6 +1228,7 @@ https://play.google.com/store/apps/details?id=com.a58070096.patcharaponjoksamut.
 #### ผลลัพท์ที่ต้องการ
 
 แสดง Game Fragment ขึ้นสู่หน้าจอ
+
 
 
 
@@ -1240,6 +1244,7 @@ https://play.google.com/store/apps/details?id=com.a58070096.patcharaponjoksamut.
 
 
 
+
 ### homeActivityTestSelectProfileTabIsDisplayed
 
 #### เงื่อนไข
@@ -1249,6 +1254,7 @@ https://play.google.com/store/apps/details?id=com.a58070096.patcharaponjoksamut.
 #### ผลลัพท์ที่ต้องการ
 
 แสดง Profile Fragment ขึ้นสู่หน้าจอ
+
 
 
 
