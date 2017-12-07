@@ -184,6 +184,5 @@ public class ProfileFragment extends Fragment implements SteamAPIViewModel.SteaA
         profileGameViewModel.reloadUserData();
         profileGameViewModel.setListener(this);
         profileGameViewModel.getFollowedGame();
-
     }
 }
