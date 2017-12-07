@@ -49,7 +49,7 @@ import butterknife.ButterKnife;
  */
 public class HotFragment extends Fragment implements SteamAPIViewModel.SteaAPIVIewModelListener {
 
-    @BindView(R.id.ultimate_recycler_view)
+    @BindView(R.id.ultimate_recycler_view_hot)
     UltimateRecyclerView recyclerView;
 
     @BindView(R.id.game_bar_text)

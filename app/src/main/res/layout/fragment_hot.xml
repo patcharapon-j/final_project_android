@@ -32,7 +32,7 @@
     </android.support.constraint.ConstraintLayout>
 
     <com.marshalchen.ultimaterecyclerview.UltimateRecyclerView
-        android:id="@+id/ultimate_recycler_view"
+        android:id="@+id/ultimate_recycler_view_hot"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="#FFFFFF"
