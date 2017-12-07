@@ -1205,6 +1205,7 @@ https://play.google.com/store/apps/details?id=com.a58070096.patcharaponjoksamut.
 
 
 ## UI Test
+### !การทดสอบ UI นั้นให้ทำการ login เอาไว้ก่อนแล้วคอยทำการ test
 
 ### homeActivityTestSelectNewsTabIsDisplayed
 
